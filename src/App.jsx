@@ -490,8 +490,8 @@ const TeacherPanel = ({ currentHex, onLogout, t }) => {
           <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
             <Clock style={{ color: currentHex }} /> {t('tch_sched')}
           </h3>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
+          <div className="overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-white/10">
+            <table className="w-full text-left text-sm min-w-[500px]">
                <thead>
                  <tr className="border-b border-white/10 text-gray-500 uppercase tracking-wider text-[10px]">
                    <th className="pb-3 px-2">{t('tch_time')}</th>
@@ -516,12 +516,13 @@ const TeacherPanel = ({ currentHex, onLogout, t }) => {
       </div>
 
 
-      <div className="bg-black/40 border border-white/10 p-8 rounded-3xl backdrop-blur-xl">
-        <div className="flex justify-between items-center mb-8">
+      <div className="bg-black/40 border border-white/10 p-6 md:p-8 rounded-3xl backdrop-blur-xl">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
           <h3 className="text-xl font-bold text-white">{t('tch_jrnl')}</h3>
-          <button className="px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-full text-sm font-bold transition-colors border border-white/20">{t('tch_save')}</button>
+          <button className="w-full sm:w-auto px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-full text-sm font-bold transition-colors border border-white/20">{t('tch_save')}</button>
         </div>
-        <table className="w-full text-left border-collapse">
+        <div className="overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-white/10">
+          <table className="w-full text-left border-collapse min-w-[700px]">
           <thead><tr className="border-b border-white/10 text-gray-500 text-xs uppercase tracking-wider"><th className="pb-4 px-4">{t('tch_th_1')}</th><th className="pb-4 px-4">{t('tch_th_2')}</th><th className="pb-4 px-4">{t('tch_th_3')}</th><th className="pb-4 px-4">{t('tch_th_4')}</th><th className="pb-4 px-4">{t('tch_th_5')}</th></tr></thead>
           <tbody>
             {students.map((s, i) => {
@@ -544,6 +545,7 @@ const TeacherPanel = ({ currentHex, onLogout, t }) => {
         </table>
       </div>
     </div>
+  </div>
   );
 };
 
