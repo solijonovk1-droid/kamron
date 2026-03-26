@@ -642,55 +642,109 @@ const EmployerPanel = ({ currentHex, onLogout, t }) => {
 
 
 const Footer = ({ t, currentHex }) => {
+  const socialLinks = [
+    { icon: Facebook, color: "#1877F2", label: "Facebook" },
+    { icon: Instagram, color: "#E4405F", label: "Instagram" },
+    { icon: Send, color: "#0088cc", label: "Telegram" },
+    { icon: Youtube, color: "#FF0000", label: "YouTube" }
+  ];
+
+  const handleUnderConstruction = (item) => {
+    alert(`${item} ${t('coming_soon') || 'tez kunda ishga tushadi!'}`);
+  };
+
   return (
-    <footer className="relative z-10 border-t border-white/5 bg-[#080808] pt-20 pb-10 px-6 mt-20">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-        {/* Column 1 */}
-        <div>
-          <h4 className="text-white font-bold text-lg mb-6">{t('f_about')}</h4>
-          <ul className="space-y-3 text-gray-500 text-sm">
-            <li className="hover:text-white cursor-pointer transition-colors">{t('f_about_1')}</li>
-            <li className="hover:text-white cursor-pointer transition-colors">{t('f_about_2')}</li>
-            <li className="hover:text-white cursor-pointer transition-colors">{t('f_about_3')}</li>
+    <footer className="relative z-10 border-t border-white/5 bg-[#050505] pt-24 pb-12 px-6 mt-20 overflow-hidden">
+      {/* Background glow effects */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[120px] -mr-64 -mt-32 pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-sky-500/5 rounded-full blur-[100px] -ml-32 -mb-32 pointer-events-none"></div>
+
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
+        {/* Column 1: Organization */}
+        <div className="space-y-6">
+          <h4 className="text-white font-black text-xl tracking-tight mb-8">
+            {t('f_about')}
+          </h4>
+          <ul className="space-y-4">
+            {[t('f_about_1'), t('f_about_2'), t('f_about_3')].map((item, i) => (
+              <li key={i} onClick={() => handleUnderConstruction(item)} className="text-gray-500 text-sm hover:text-white cursor-pointer transition-all duration-300 flex items-center group">
+                <span className="w-0 group-hover:w-2 h-[1px] bg-current mr-0 group-hover:mr-2 transition-all"></span>
+                {item}
+              </li>
+            ))}
           </ul>
-          <div className="flex gap-4 mt-8">
-             <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white transition-all cursor-pointer"><Facebook size={20} /></div>
-             <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 hover:text-white hover:border-white transition-all cursor-pointer bg-white/10"><Instagram size={20} /></div>
-             <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white transition-all cursor-pointer"><Send size={20} /></div>
-             <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white transition-all cursor-pointer"><Youtube size={20} /></div>
+          <div className="flex gap-3 mt-10">
+            {socialLinks.map((soc, i) => (
+              <div 
+                key={i} 
+                className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/40 transition-all cursor-pointer hover:-translate-y-1 hover:shadow-lg relative group"
+              >
+                <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-20 blur-md transition-opacity" style={{ backgroundColor: soc.color }}></div>
+                <soc.icon size={20} className="relative z-10" />
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Column 2 */}
-        <div>
-          <h4 className="text-white font-bold text-lg mb-6">{t('f_opp')}</h4>
-          <ul className="space-y-3 text-gray-500 text-sm">
-            <li className="hover:text-white cursor-pointer transition-colors">{t('f_opp_1')}</li>
-            <li className="hover:text-white cursor-pointer transition-colors">{t('f_opp_3')}</li>
-            <li className="hover:text-white cursor-pointer transition-colors">{t('f_opp_4')}</li>
+        {/* Column 2: Opportunities */}
+        <div className="space-y-6">
+          <h4 className="text-white font-black text-xl tracking-tight mb-8">
+            {t('f_opp')}
+          </h4>
+          <ul className="space-y-4">
+            {[t('f_opp_1'), t('f_opp_3'), t('f_opp_4')].map((item, i) => (
+              <li key={i} onClick={() => handleUnderConstruction(item)} className="text-gray-500 text-sm hover:text-white cursor-pointer transition-all duration-300 flex items-center group">
+                <span className="w-0 group-hover:w-2 h-[1px] bg-current mr-0 group-hover:mr-2 transition-all"></span>
+                {item}
+              </li>
+            ))}
           </ul>
         </div>
 
-        {/* Column 3 */}
-        <div>
-          <h4 className="text-white font-bold text-lg mb-6">{t('f_part')}</h4>
-          <ul className="space-y-3 text-gray-500 text-sm">
-            <li className="hover:text-white cursor-pointer transition-colors">{t('f_part_1')}</li>
+        {/* Column 3: Partners */}
+        <div className="space-y-6">
+          <h4 className="text-white font-black text-xl tracking-tight mb-8">
+            {t('f_part')}
+          </h4>
+          <ul className="space-y-4">
+            {[t('f_part_1')].map((item, i) => (
+              <li key={i} onClick={() => handleUnderConstruction(item)} className="text-gray-500 text-sm hover:text-white cursor-pointer transition-all duration-300 flex items-center group">
+                <span className="w-0 group-hover:w-2 h-[1px] bg-current mr-0 group-hover:mr-2 transition-all"></span>
+                {item}
+              </li>
+            ))}
           </ul>
         </div>
 
-        {/* Column 4 */}
-        <div>
-          <h4 className="text-white font-bold text-lg mb-6">{t('f_supp')}</h4>
-          <p className="text-emerald-500 text-sm mb-8 hover:underline cursor-pointer">{t('f_supp_1')}</p>
-          <button className="w-full py-3 px-6 rounded-xl border border-emerald-500/50 text-emerald-500 font-bold text-sm hover:bg-emerald-500 hover:text-black transition-all">
-            {t('f_btn')}
-          </button>
+        {/* Column 4: Support */}
+        <div className="space-y-6">
+          <h4 className="text-white font-black text-xl tracking-tight mb-8">
+            {t('f_supp')}
+          </h4>
+          <p 
+            onClick={() => handleUnderConstruction(t('f_supp_1'))}
+            className="text-emerald-500 text-sm font-medium hover:text-emerald-400 cursor-pointer transition-colors mb-8 inline-block drop-shadow-[0_0_8px_rgba(16,185,129,0.3)]"
+          >
+            {t('f_supp_1')}
+          </p>
+          <div className="pt-4">
+            <button 
+              onClick={() => handleUnderConstruction(t('f_btn'))}
+              className="w-full group relative py-4 px-6 rounded-2xl border border-emerald-500/30 text-emerald-500 font-bold text-sm overflow-hidden transition-all hover:border-emerald-500/60"
+            >
+              <div className="absolute inset-0 bg-emerald-500 opacity-0 group-hover:opacity-10 transition-opacity"></div>
+              <div className="absolute inset-0 bg-emerald-500/20 blur-2xl opacity-0 group-hover:opacity-40 transition-opacity"></div>
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                {t('f_btn')}
+              </span>
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto border-t border-white/5 pt-8 text-center">
-        <p className="text-gray-600 text-[13px] hover:text-gray-400 cursor-pointer transition-colors">{t('f_legal')}</p>
+      <div className="max-w-7xl mx-auto border-t border-white/5 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
+        <p className="text-gray-600 text-[12px] font-mono tracking-widest uppercase">{t('f_legal')}</p>
+        <p className="text-gray-700 text-[10px] font-mono">© 2026 TALENT GRAVITY PLATFORM. ZERO-G SECURE TERMINAL.</p>
       </div>
     </footer>
   );

@@ -73,7 +73,8 @@ export const locales = {
     f_part: "Hamkorlarga", f_part_1: "Hamkorlik dasturlari",
     f_supp: "Qo'llab-quvvatlash", f_supp_1: "Qo'llab-quvvatlash xizmati portal",
     f_btn: "Tashkilotni ulash",
-    f_legal: "Foydalanuvchining shartnomasi"
+    f_legal: "Foydalanuvchining shartnomasi",
+    coming_soon: "tez kunda ishga tushadi!"
   },
   ru: {
     sys_theme: "Тема",
@@ -145,7 +146,8 @@ export const locales = {
     f_part: "Партнерам", f_part_1: "Партнерские программы",
     f_supp: "Поддержка", f_supp_1: "Портал службы поддержки",
     f_btn: "Подключить организацию",
-    f_legal: "Пользовательское соглашение"
+    f_legal: "Пользовательское соглашение",
+    coming_soon: "скоро будет доступно!"
   },
   en: {
     sys_theme: "Theme",
@@ -217,6 +219,7 @@ export const locales = {
     f_part: "Partners", f_part_1: "Partnership programs",
     f_supp: "Support", f_supp_1: "Support service portal",
     f_btn: "Connect organization",
-    f_legal: "User agreement"
+    f_legal: "User agreement",
+    coming_soon: "coming soon!"
   }
 };
