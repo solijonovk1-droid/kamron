@@ -641,17 +641,74 @@ const EmployerPanel = ({ currentHex, onLogout, t }) => {
 };
 
 
-const Footer = ({ t, currentHex }) => {
+/* =========================================
+   Footer Modal / Overlay System
+   ========================================= */
+const FooterModal = ({ page, onClose, t, currentHex }) => {
+  if (!page) return null;
+
+  const contentMap = {
+    [t('f_about_1')]: { title: t('f_about_1'), desc: "Talent Gravity - bu kelajak ta'limi va kadrlar boshqaruvi tizimi. Biz iqtidorli yoshlarni eng yaxshi ish beruvchilar bilan bog'laymiz." },
+    [t('f_about_2')]: { title: t('f_about_2'), desc: "Bugun 2026-yilgi eng yaxshi iqtidorlar reytingi e'lon qilindi. 50 dan ortiq xalqaro kompaniyalar tizimga ulandi." },
+    [t('f_about_3')]: { title: t('f_about_3'), desc: "Biz bilan bog'lanish: support@talentgravity.io | +998 71 200 00 00" },
+    [t('f_opp_1')]: { title: t('f_opp_1'), desc: "O'qituvchilar uchun avtomatlashtirilgan baholash tizimi va AI yordamchisi mavjud." },
+    [t('f_opp_3')]: { title: t('f_opp_3'), desc: "O'quvchilar uchun shaxsiy KPI monitoringi va xalqaro internship dasturlari ochiq." },
+    [t('f_opp_4')]: { title: t('f_opp_4'), desc: "Davlat organlari uchun kadrlar zahirasini boshqarish va tahliliy hisobotlar moduli." },
+    [t('f_part_1')]: { title: t('f_part_1'), desc: "Biz bilan hamkorlik qiling va o'z korxonangiz uchun eng sara kadrlarga ega bo'ling." },
+    [t('f_supp_1')]: { title: t('f_supp_1'), desc: "24/7 qo'llab-quvvatlash xizmati sizga yordam berishga tayyor." },
+    [t('f_btn')]: { title: t('f_btn'), desc: "Tashkilotingizni tizimga ulash uchun arizangiz qabul qilindi. Tez orada operatorlarimiz bog'lanishadi." },
+  };
+
+  const data = contentMap[page] || { title: page, desc: "Ma'lumot yuklanmoqda..." };
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md"
+      onClick={onClose}
+    >
+      <motion.div 
+        initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }}
+        className="w-full max-w-2xl bg-[#0a0a0a] border border-white/10 rounded-3xl p-10 relative overflow-hidden"
+        onClick={e => e.stopPropagation()}
+        style={{ boxShadow: `0 0 50px ${currentHex}20` }}
+      >
+        <div className="absolute top-0 left-0 w-full h-1" style={{ backgroundColor: currentHex }}></div>
+        <button onClick={onClose} className="absolute top-6 right-6 text-gray-500 hover:text-white transition-colors">
+          <Activity size={24} className="rotate-45" />
+        </button>
+
+        <div className="relative z-10">
+          <h2 className="text-3xl font-black text-white mb-6 uppercase tracking-widest italic" style={{ color: currentHex }}>{data.title}</h2>
+          <div className="w-12 h-1 bg-white/20 mb-8"></div>
+          <p className="text-gray-400 leading-relaxed text-lg font-light">
+            {data.desc}
+          </p>
+          
+          <div className="mt-12 flex justify-end">
+            <button 
+              onClick={onClose}
+              className="px-8 py-3 rounded-xl border border-white/10 text-white font-bold hover:bg-white hover:text-black transition-all"
+            >
+              Yopish
+            </button>
+          </div>
+        </div>
+
+        {/* Decorative elements */}
+        <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/5 rounded-full blur-3xl pointer-events-none" style={{ backgroundColor: currentHex }}></div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+const Footer = ({ t, currentHex, setActiveFooterPage }) => {
   const socialLinks = [
     { icon: Facebook, color: "#1877F2", label: "Facebook" },
     { icon: Instagram, color: "#E4405F", label: "Instagram" },
     { icon: Send, color: "#0088cc", label: "Telegram" },
     { icon: Youtube, color: "#FF0000", label: "YouTube" }
   ];
-
-  const handleUnderConstruction = (item) => {
-    alert(`${item} ${t('coming_soon') || 'tez kunda ishga tushadi!'}`);
-  };
 
   return (
     <footer className="relative z-10 border-t border-white/5 bg-[#050505] pt-24 pb-12 px-6 mt-20 overflow-hidden">
@@ -667,7 +724,7 @@ const Footer = ({ t, currentHex }) => {
           </h4>
           <ul className="space-y-4">
             {[t('f_about_1'), t('f_about_2'), t('f_about_3')].map((item, i) => (
-              <li key={i} onClick={() => handleUnderConstruction(item)} className="text-gray-500 text-sm hover:text-white cursor-pointer transition-all duration-300 flex items-center group">
+              <li key={i} onClick={() => setActiveFooterPage(item)} className="text-gray-500 text-sm hover:text-white cursor-pointer transition-all duration-300 flex items-center group">
                 <span className="w-0 group-hover:w-2 h-[1px] bg-current mr-0 group-hover:mr-2 transition-all"></span>
                 {item}
               </li>
@@ -693,7 +750,7 @@ const Footer = ({ t, currentHex }) => {
           </h4>
           <ul className="space-y-4">
             {[t('f_opp_1'), t('f_opp_3'), t('f_opp_4')].map((item, i) => (
-              <li key={i} onClick={() => handleUnderConstruction(item)} className="text-gray-500 text-sm hover:text-white cursor-pointer transition-all duration-300 flex items-center group">
+              <li key={i} onClick={() => setActiveFooterPage(item)} className="text-gray-500 text-sm hover:text-white cursor-pointer transition-all duration-300 flex items-center group">
                 <span className="w-0 group-hover:w-2 h-[1px] bg-current mr-0 group-hover:mr-2 transition-all"></span>
                 {item}
               </li>
@@ -708,7 +765,7 @@ const Footer = ({ t, currentHex }) => {
           </h4>
           <ul className="space-y-4">
             {[t('f_part_1')].map((item, i) => (
-              <li key={i} onClick={() => handleUnderConstruction(item)} className="text-gray-500 text-sm hover:text-white cursor-pointer transition-all duration-300 flex items-center group">
+              <li key={i} onClick={() => setActiveFooterPage(item)} className="text-gray-500 text-sm hover:text-white cursor-pointer transition-all duration-300 flex items-center group">
                 <span className="w-0 group-hover:w-2 h-[1px] bg-current mr-0 group-hover:mr-2 transition-all"></span>
                 {item}
               </li>
@@ -722,14 +779,14 @@ const Footer = ({ t, currentHex }) => {
             {t('f_supp')}
           </h4>
           <p 
-            onClick={() => handleUnderConstruction(t('f_supp_1'))}
+            onClick={() => setActiveFooterPage(t('f_supp_1'))}
             className="text-emerald-500 text-sm font-medium hover:text-emerald-400 cursor-pointer transition-colors mb-8 inline-block drop-shadow-[0_0_8px_rgba(16,185,129,0.3)]"
           >
             {t('f_supp_1')}
           </p>
           <div className="pt-4">
             <button 
-              onClick={() => handleUnderConstruction(t('f_btn'))}
+              onClick={() => setActiveFooterPage(t('f_btn'))}
               className="w-full group relative py-4 px-6 rounded-2xl border border-emerald-500/30 text-emerald-500 font-bold text-sm overflow-hidden transition-all hover:border-emerald-500/60"
             >
               <div className="absolute inset-0 bg-emerald-500 opacity-0 group-hover:opacity-10 transition-opacity"></div>
@@ -757,6 +814,7 @@ const App = () => {
   const [role, setRole] = useState(null); // 'student' | 'teacher' | 'employer' | null
   const [theme, setTheme] = useState('emerald');
   const [lang, setLang] = useState('uz');
+  const [activeFooterPage, setActiveFooterPage] = useState(null);
   const { timeString, dateString } = useCyberClock();
 
   const themeHexMap = { emerald: '#10b981', fuchsia: '#d946ef', cyan: '#06b6d4' };
@@ -772,6 +830,17 @@ const App = () => {
     <div className="relative min-h-screen bg-[#050505] overflow-x-hidden selection:bg-white/20 text-white font-sans">
       <ParticleBackground explode={false} themeColor={currentHex} />
       
+      <AnimatePresence>
+        {activeFooterPage && (
+          <FooterModal 
+            page={activeFooterPage} 
+            onClose={() => setActiveFooterPage(null)} 
+            t={t} 
+            currentHex={currentHex} 
+          />
+        )}
+      </AnimatePresence>
+
       {/* Dynamic Header System */}
       <div className="fixed top-0 left-0 w-full z-50 flex items-center justify-between p-6">
         <div className="flex gap-4 items-center">
@@ -804,7 +873,7 @@ const App = () => {
         </motion.div>
       </AnimatePresence>
 
-      <Footer t={t} currentHex={currentHex} />
+      <Footer t={t} currentHex={currentHex} setActiveFooterPage={setActiveFooterPage} />
     </div>
   );
 };
