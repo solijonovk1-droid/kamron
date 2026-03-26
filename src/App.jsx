@@ -148,7 +148,7 @@ const GlitchTitle = ({ text, themeHex }) => {
   }, [text]);
 
   return (
-    <h1 className="text-4xl md:text-6xl font-black mb-2 text-transparent bg-clip-text drop-shadow-lg"
+    <h1 className="text-3xl md:text-6xl font-black mb-2 text-transparent bg-clip-text drop-shadow-lg text-center"
         style={{ backgroundImage: `linear-gradient(to right, ${themeHex}, #ffffff)` }}>
       {displayText}
     </h1>
@@ -237,12 +237,12 @@ const LoginView = ({ setRole, currentHex, t }) => {
   };
 
   return (
-    <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="flex flex-col items-center justify-center min-h-[80vh] relative z-10 px-6">
+    <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="flex flex-col items-center justify-center min-h-screen relative z-10 px-6 pt-24 pb-12">
       <AnimatePresence mode="wait">
         {!selectedRoleData ? (
           <motion.div key="selection" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, y: -20, scale: 0.95 }} className="w-full flex flex-col items-center justify-center">
             <GlitchTitle text={t('login_title')} themeHex={currentHex} />
-            <p className="text-gray-400 mb-12 max-w-lg text-center">{t('login_subtitle')}</p>
+            <p className="text-gray-400 mb-8 md:mb-12 max-w-lg text-center text-sm md:text-base">{t('login_subtitle')}</p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl">
               {roles.map((r, i) => (
@@ -842,19 +842,19 @@ const App = () => {
       </AnimatePresence>
 
       {/* Dynamic Header System */}
-      <div className="fixed top-0 left-0 w-full z-50 flex items-center justify-between p-6">
-        <div className="flex gap-4 items-center">
-          <button title={t('sys_theme')} onClick={toggleTheme} className="p-3 bg-black/40 border border-white/10 rounded-full hover:border-white/30 backdrop-blur-md transition-all text-white/70 hover:text-white group">
-            <Palette size={20} className="group-hover:rotate-12 transition-transform" style={{ color: currentHex }} />
+      <div className="fixed top-0 left-0 w-full z-50 flex items-center justify-between p-4 md:p-6 bg-gradient-to-b from-[#050505] to-transparent">
+        <div className="flex gap-2 md:gap-4 items-center">
+          <button title={t('sys_theme')} onClick={toggleTheme} className="p-2.5 md:p-3 bg-black/40 border border-white/10 rounded-full hover:border-white/30 backdrop-blur-md transition-all text-white/70 hover:text-white group">
+            <Palette size={18} className="group-hover:rotate-12 transition-transform" style={{ color: currentHex }} />
           </button>
           
-          <button onClick={toggleLang} className="px-4 py-3 bg-black/40 border border-white/10 rounded-full hover:border-white/30 backdrop-blur-md transition-all text-white font-bold text-xs flex items-center gap-2 group">
-            <Globe size={16} className="group-hover:rotate-180 transition-transform duration-500" style={{ color: currentHex }} />
+          <button onClick={toggleLang} className="px-3 py-2 md:px-4 md:py-3 bg-black/40 border border-white/10 rounded-full hover:border-white/30 backdrop-blur-md transition-all text-white font-bold text-[10px] md:text-xs flex items-center gap-2 group">
+            <Globe size={14} className="group-hover:rotate-180 transition-transform duration-500" style={{ color: currentHex }} />
             {t('lang')}
           </button>
         </div>
           
-        <div className="flex items-center gap-4 bg-black/40 px-5 py-2.5 rounded-full border border-white/10 backdrop-blur-md opacity-0 pointer-events-none md:opacity-100 md:pointer-events-auto transition-opacity">
+        <div className="hidden md:flex items-center gap-4 bg-black/40 px-5 py-2.5 rounded-full border border-white/10 backdrop-blur-md transition-opacity">
           <Clock size={16} style={{ color: currentHex }} />
           <div className="flex flex-col font-mono text-right">
             <span className="text-white font-bold text-sm tracking-widest">{timeString}</span>
