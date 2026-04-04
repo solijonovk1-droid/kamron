@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ustoz Ko'rinishi (ADMIN) | EduGravity</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-2"></div>
+
+  <!-- Admin Header -->
+  <nav>
+    <div class="logo">
+      <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="18" stroke="url(#logoGrad)" stroke-width="3"/>
+        <path d="M20 10L10 25H30L20 10Z" fill="white"/>
+      </svg>
+      EduGravity
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html" data-i18n="nav_home">Asosiy</a></li>
+      <li><a href="admin-student-view.html" data-i18n="nav_student_view">Talaba Ko'rinishi</a></li>
+      <li><a href="admin-teacher-view.html" class="active" data-i18n="nav_teacher_view">Ustoz Ko'rinishi</a></li>
+      <li><a href="admin-dashboard.html" data-i18n="nav_admin_dash">Admin Paneli</a></li>
+    </ul>
+    <div class="nav-actions">
+       <div class="theme-toggle" onclick="toggleTheme()">🌙</div>
+       <div class="notif-wrapper">
+         <span class="notif-bell">🔔</span>
+         <div class="notif-dot"></div>
+         <div class="notif-dropdown">
+           <div class="notif-item" data-i18n="notif_1">Xush kelibsiz! EduGravity tizimi muvaffaqiyatli yuklandi.</div>
+         </div>
+       </div>
+       <div class="lang-switcher">
+        <span>UZ</span>
+        <div class="lang-dropdown">
+          <div class="lang-opt" onclick="setLanguage('uz')">O'zbekcha</div>
+          <div class="lang-opt" onclick="setLanguage('ru')">Русский</div>
+          <div class="lang-opt" onclick="setLanguage('en')">English</div>
+        </div>
+      </div>
+       <div style="text-align: right;">
+          <p style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);">Siz (ADMIN)</p>
+          <a href="#" onclick="logout()" style="font-size: 0.7rem; color: #ff4d4d; text-decoration: none; cursor: pointer; font-weight: 800;" data-i18n="nav_logout">[ Chiqish ]</a>
+       </div>
+       <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 800; color: #000;">AD</div>
+    </div>
+  </nav>
+
+  <section class="glass-section">
+    <div style="background: rgba(144, 0, 255, 0.1); padding: 1rem; border-radius: 10px; border: 1px solid var(--secondary); margin-bottom: 2rem; color: var(--secondary); text-align: center; font-weight: 700;">
+       ⚠️ ADMIN REJIMI: Siz hozirda o'qituvchi (Prof. Alisherov N.) profilini ko'rmoqdasiz.
+    </div>
+    
+    <!-- Teacher Dashboard Content Copy -->
+    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem;">
+      <!-- Sidebar / Statistics -->
+      <div>
+        <div class="glass-card" style="margin-bottom: 2rem;">
+           <h3 style="margin-bottom: 2rem;">Guruh Ko'rsatkichlari</h3>
+           <div style="margin-bottom: 25px;">
+              <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">O'rtacha GPA</p>
+              <div style="display: flex; align-items: center; gap: 15px;">
+                 <h4 style="font-size: 1.5rem; color: var(--success);">4.62</h4>
+                 <span style="font-size: 0.7rem; color: var(--success);">↑ 2.4%</span>
+              </div>
+           </div>
+        </div>
+      </div>
+
+      <!-- Student List -->
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+           <h2>Talabalar Ro'yxati (CS-102)</h2>
+        </div>
+
+        <div class="glass-card" style="padding: 0;">
+           <table style="width: 100%; border-collapse: collapse; text-align: left;">
+              <thead>
+                 <tr style="border-bottom: 1px solid var(--glass-border); background: rgba(255,255,255,0.02);">
+                    <th style="padding: 1.5rem;">F.I.SH</th>
+                    <th style="padding: 1.5rem;">Ball (100)</th>
+                    <th style="padding: 1.5rem;">Reyting</th>
+                 </tr>
+              </thead>
+              <tbody>
+                 <tr style="border-bottom: 1px solid var(--glass-border);">
+                    <td style="padding: 1.2rem; display: flex; align-items: center; gap: 12px;">
+                       <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: #000;">SK</div>
+                       <b>Sardor Karimov</b>
+                    </td>
+                    <td style="padding: 1.2rem;">912</td>
+                    <td style="padding: 1.2rem;"><span style="color: var(--success); font-weight: 800;">#3 - Himoyalangan</span></td>
+                 </tr>
+              </tbody>
+           </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="main-footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4 data-i18n="f_about_title">Tashkilot haqida</h4>
+        <ul>
+          <li><a href="#" data-i18n="f_about_1">Biz haqimizda</a></li>
+          <li><a href="#" data-i18n="f_about_2">Yangiliklar</a></li>
+          <li><a href="#" data-i18n="f_about_3">Aloqa uchun ma'lumotlar</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4 data-i18n="f_opp_title">Imkoniyatlar</h4>
+        <ul>
+          <li><a href="#" data-i18n="f_opp_1">O'qituvchilarga</a></li>
+          <li><a href="#" data-i18n="f_opp_2">Ota-onalarga</a></li>
+          <li><a href="#" data-i18n="f_opp_3">O'quvchilarga</a></li>
+          <li><a href="#" data-i18n="f_opp_4">Davlat organlariga</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4 data-i18n="f_support_title">Qo'llab-quvvatlash</h4>
+        <ul>
+          <li><a href="#" style="color: #14b8a6;" data-i18n="f_support_1">Qo'llab-quvvatlash xizmati portal</a></li>
+        </ul>
+        <a href="#" class="btn-connect" data-i18n="btn_connect">Tashkilotni ulash</a>
+      </div>
+    </div>
+    
+    <div class="footer-bottom" data-i18n="f_copyright">
+      &copy; 2026 EduGravity. Barcha huquqlar himoyalangan.
+    </div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>

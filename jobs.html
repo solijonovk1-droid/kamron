@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premium Ishlar | Talent Gravity</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-2"></div>
+
+  <nav>
+    <div class="logo">
+      <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="18" stroke="url(#logoGrad)" stroke-width="3"/>
+        <path d="M20 10L10 25H30L20 10Z" fill="white"/>
+      </svg>
+      EduGravity
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html" data-i18n="nav_home">Asosiy</a></li>
+      <li><a href="student-dashboard.html" data-i18n="nav_panel">Talaba Paneli</a></li>
+      <li><a href="jobs.html" class="active" data-i18n="nav_jobs">Ish Kafolati</a></li>
+    </ul>
+    
+    <div class="nav-actions">
+       <div class="theme-toggle" onclick="toggleTheme()">🌙</div>
+       
+       <div class="notif-wrapper">
+         <span class="notif-bell">🔔</span>
+         <div class="notif-dot"></div>
+         <div class="notif-dropdown">
+           <div class="notif-item" data-i18n="notif_1">Xush kelibsiz! EduGravity tizimi muvaffaqiyatli yuklandi.</div>
+           <div class="notif-item" data-i18n="notif_2" style="border-left-color: var(--secondary);">Yangi grant taklifi mavjud!</div>
+         </div>
+       </div>
+
+       <div class="lang-switcher">
+        <span>UZ</span>
+        <div class="lang-dropdown">
+          <div class="lang-opt" onclick="setLanguage('uz')">O'zbekcha</div>
+          <div class="lang-opt" onclick="setLanguage('ru')">Русский</div>
+          <div class="lang-opt" onclick="setLanguage('en')">English</div>
+        </div>
+      </div>
+
+       <button class="btn-premium" onclick="window.location.href='login.html'" data-i18n="btn_login">Kirish</button>
+    </div>
+  </nav>
+
+  <section class="glass-section" style="min-height: 80vh;">
+    <div style="text-align: center; margin-bottom: 4rem;">
+      <div class="section-tag">Premium 100%</div>
+      <h2 style="margin-bottom: 1rem;">Aqlli Ish Topish Tizimi</h2>
+      <p style="color: var(--text-muted);">Sizning o'rningiz bititguningizcha platforma sizga eng yuqori maoshli ishlarni bron qiladi.</p>
+    </div>
+    
+    <div class="feature-grid" style="grid-template-columns: 1fr;">
+      <div class="glass-card" style="border: 1px solid var(--secondary); background: radial-gradient(circle at top right, rgba(144,0,255,0.1), transparent);">
+        <div class="card-icon" style="background: var(--secondary);">💼</div>
+        <h3>Top Vakansiyalar Siz Uchun</h3>
+        <p style="color: var(--text-muted); margin: 15px 0;">Sizning rankingingiz 3-o'rinda bo'lgani uchun ushbu ishlar sizga birinchi bo'lib taklif etiladi.</p>
+        
+        <div class="job-card-item">
+          <div class="job-info">
+             <div class="job-company-logo">E</div>
+             <div>
+                <p class="job-company">EPAM Systems</p>
+                <p class="job-title">Technical Strategy Lead</p>
+             </div>
+          </div>
+          <div class="job-badge active">Kafolatlangan</div>
+        </div>
+
+        <div class="job-card-item">
+          <div class="job-info">
+             <div class="job-company-logo" style="background: #fff; color: #000;">G</div>
+             <div>
+                <p class="job-company">Google (Central Asia)</p>
+                <p class="job-title">Cloud Solutions Architect</p>
+             </div>
+          </div>
+          <div class="job-badge premium">Premium Match</div>
+        </div>
+
+        <div class="job-card-item">
+          <div class="job-info">
+             <div class="job-company-logo" style="background: #000; color: #fff;">A</div>
+             <div>
+                <p class="job-company">Amazon Web Services</p>
+                <p class="job-title">Senior DevOps Engineer</p>
+             </div>
+          </div>
+          <div class="job-badge premium">Elite Match</div>
+        </div>
+        
+        <button class="btn-premium" style="width: 100%; margin-top: 20px;">Barcha Premium Ishlarni Ko'rish</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="main-footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4 data-i18n="f_about_title">Tashkilot haqida</h4>
+        <ul>
+          <li><a href="#" data-i18n="f_about_1">Biz haqimizda</a></li>
+          <li><a href="#" data-i18n="f_about_2">Yangiliklar</a></li>
+          <li><a href="#" data-i18n="f_about_3">Aloqa uchun ma'lumotlar</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4 data-i18n="f_opp_title">Imkoniyatlar</h4>
+        <ul>
+          <li><a href="#" data-i18n="f_opp_1">O'qituvchilarga</a></li>
+          <li><a href="#" data-i18n="f_opp_2">Ota-onalarga</a></li>
+          <li><a href="#" data-i18n="f_opp_3">O'quvchilarga</a></li>
+          <li><a href="#" data-i18n="f_opp_4">Davlat organlariga</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4 data-i18n="f_support_title">Qo'llab-quvvatlash</h4>
+        <ul>
+          <li><a href="#" style="color: #14b8a6;" data-i18n="f_support_1">Qo'llab-quvvatlash xizmati portal</a></li>
+        </ul>
+        <a href="#" class="btn-connect" data-i18n="btn_connect">Tashkilotni ulash</a>
+      </div>
+    </div>
+    
+    <div class="footer-bottom" data-i18n="f_copyright">
+      &copy; 2026 EduGravity. Barcha huquqlar himoyalangan.
+    </div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
