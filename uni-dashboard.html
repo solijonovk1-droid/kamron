@@ -3,10 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Region Unversitet Paneli | EduGravity</title>
+  <title>Universitet Paneli | EduGravity</title>
+  <meta name="description" content="EduGravity universitet paneli - iqtidorli talabalarni izlash va grant taklif qilish."/>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<script>
+  (function() {
+    const role = localStorage.getItem('userRole');
+    if (!role) { window.location.replace('login.html'); }
+    else if (role !== 'uni' && role !== 'admin') { window.location.replace('login.html'); }
+  })();
+</script>
   <div class="bg-glow glow-1"></div>
   <div class="bg-glow glow-2"></div>
 
@@ -40,28 +48,28 @@
         </div>
       </div>
        <div style="text-align: right;">
-          <p style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);">Amity University</p>
+          <p id="navUserName" style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);">Amity University</p>
           <a href="#" onclick="logout()" style="font-size: 0.7rem; color: #ff4d4d; text-decoration: none; cursor: pointer; font-weight: 800;" data-i18n="nav_logout">[ Chiqish ]</a>
        </div>
-       <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--secondary); display: flex; align-items: center; justify-content: center; font-weight: 800; color: #fff;">AU</div>
+       <div id="navUserAvatar" style="width: 40px; height: 40px; border-radius: 50%; background: var(--secondary); display: flex; align-items: center; justify-content: center; font-weight: 800; color: #fff;">AU</div>
     </div>
   </nav>
 
   <section class="glass-section" style="min-height: 80vh;">
       <div style="text-align: center; margin-bottom: 4rem;">
-         <div class="section-tag">Talantlar Ovchisi</div>
-         <h2 style="margin-bottom: 1rem;">Iqtidorli Talabalarni Izlash</h2>
-         <p style="color: var(--text-muted);">Platformadagi eng yuqori ballga ega "Kontrakt" asosida o'qiydigan talabalarni tanlang va ularga 100% Grant taklif qiling.</p>
+         <div class="section-tag" data-i18n="nav_talent">Talantlar Ovchisi</div>
+         <h2 style="margin-bottom: 1rem;" data-i18n="uni_search_title">Iqtidorli Talabalarni Izlash</h2>
+         <p style="color: var(--text-muted);" data-i18n="uni_search_desc">Platformadagi eng yuqori ballga ega "Kontrakt" asosida o'qiydigan talabalarni tanlang va ularga 100% Grant taklif qiling.</p>
       </div>
 
       <div class="glass-card" style="padding: 0;">
          <table style="width: 100%; border-collapse: collapse; text-align: left;">
             <thead>
                <tr style="border-bottom: 1px solid var(--glass-border); background: rgba(255,255,255,0.02);">
-                  <th style="padding: 1.5rem;">F.I.SH & Universitet</th>
-                  <th style="padding: 1.5rem;">Ball (100) / GPA</th>
-                  <th style="padding: 1.5rem;">Hozirgi Status</th>
-                  <th style="padding: 1.5rem;">Amal</th>
+                  <th style="padding: 1.5rem;" data-i18n="uni_th_name_uni">F.I.SH & Universitet</th>
+                  <th style="padding: 1.5rem;" data-i18n="uni_th_score_gpa">Ball (100) / GPA</th>
+                  <th style="padding: 1.5rem;" data-i18n="uni_th_status">Hozirgi Status</th>
+                  <th style="padding: 1.5rem;" data-i18n="ad_th_action">Amal</th>
                </tr>
             </thead>
             <tbody>
@@ -77,7 +85,7 @@
                      <span style="background: rgba(255, 69, 0, 0.1); color: #ff4500; padding: 4px 10px; border-radius: 5px; font-size: 0.7rem; font-weight: 700;">KONTRAKT</span>
                   </td>
                   <td style="padding: 1.5rem;">
-                     <button class="btn-premium" onclick="alert('Talabaga Grant taklifnomasi yuborildi!');" style="font-size: 0.8rem; padding: 8px 20px;">Grant Taklif Qilish</button>
+                     <button class="btn-premium" onclick="alert('Talabaga Grant taklifnomasi yuborildi!');" style="font-size: 0.8rem; padding: 8px 20px;" data-i18n="uni_btn_grant">Grant Taklif Qilish</button>
                   </td>
                </tr>
                <tr style="border-bottom: 1px solid var(--glass-border);">
@@ -92,7 +100,7 @@
                      <span style="background: rgba(255, 69, 0, 0.1); color: #ff4500; padding: 4px 10px; border-radius: 5px; font-size: 0.7rem; font-weight: 700;">KONTRAKT</span>
                   </td>
                   <td style="padding: 1.5rem;">
-                     <button class="btn-premium" onclick="alert('Talabaga Grant taklifnomasi yuborildi!');" style="font-size: 0.8rem; padding: 8px 20px;">Grant Taklif Qilish</button>
+                     <button class="btn-premium" onclick="alert('Talabaga Grant taklifnomasi yuborildi!');" style="font-size: 0.8rem; padding: 8px 20px;" data-i18n="uni_btn_grant">Grant Taklif Qilish</button>
                   </td>
                </tr>
             </tbody>
@@ -101,13 +109,13 @@
 
       <div style="margin-top: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
          <div class="glass-card">
-            <h3>Nega Grant taklif qilish kerak?</h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; line-height: 1.6;">
+            <h3 data-i18n="uni_why_title">Nega Grant taklif qilish kerak?</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; line-height: 1.6;" data-i18n="uni_why_desc">
                Xususiy universitetlar uchun eng aqlli talabalarni yig'ish platformaning asosiy vazifasidir. Siz davlat OTMda o'qiydigan eng iqtidorli "kontrakt" o'quvchisini o'zingizga grant asosida transfer qilib, universitet nufuzini oshirasiz.
             </p>
          </div>
          <div class="glass-card" style="border-color: var(--success);">
-            <h3>Yaqindagi Transferlar</h3>
+            <h3 data-i18n="uni_recent_trans">Yaqindagi Transferlar</h3>
             <div style="margin-top: 1rem; font-size: 0.85rem;">
                <p style="margin-bottom: 10px; color: var(--success);">✅ Webster Uni: 15 ta talaba (Grant)</p>
                <p style="margin-bottom: 10px; color: var(--success);">✅ Inha Uni: 8 ta talaba (Grant)</p>
@@ -121,9 +129,9 @@
       <div class="footer-section">
         <h4 data-i18n="f_about_title">Tashkilot haqida</h4>
         <ul>
-          <li><a href="#" data-i18n="f_about_1">Biz haqimizda</a></li>
-          <li><a href="#" data-i18n="f_about_2">Yangiliklar</a></li>
-          <li><a href="#" data-i18n="f_about_3">Aloqa uchun ma'lumotlar</a></li>
+          <li><a href="about.html" data-i18n="f_about_1">Biz haqimizda</a></li>
+          <li><a href="about.html#news" data-i18n="f_about_2">Yangiliklar</a></li>
+          <li><a href="about.html#contact" data-i18n="f_about_3">Aloqa uchun ma'lumotlar</a></li>
         </ul>
       </div>
       

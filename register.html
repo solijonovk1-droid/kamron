@@ -5,71 +5,133 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ro'yxatdan O'tish | EduGravity</title>
   <link rel="stylesheet" href="style.css">
-</head>
-<body style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem 0;">
-  <div class="bg-glow glow-1"></div>
-  <div class="bg-glow glow-2"></div>
-
-  <div style="position: absolute; top: 20px; right: 20px; display: flex; gap: 15px; align-items: center;">
-    <div class="theme-toggle" onclick="toggleTheme()">🌙</div>
-    <div class="lang-switcher">
-      <span>UZ</span>
-      <div class="lang-dropdown">
-        <div class="lang-opt" onclick="setLanguage('uz')">O'zbekcha</div>
-        <div class="lang-opt" onclick="setLanguage('ru')">Русский</div>
-        <div class="lang-opt" onclick="setLanguage('en')">English</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="glass-card" style="width: 100%; max-width: 500px; padding: 3rem; text-align: center;">
-    <div class="logo" style="justify-content: center; margin-bottom: 2rem;">
-      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="20" cy="20" r="18" stroke="url(#logoGrad)" stroke-width="3"/>
-        <path d="M20 10L10 25H30L20 10Z" fill="white"/>
-      </svg>
-      <span style="font-size: 2rem;">EduGravity</span>
-    </div>
-    <h2 style="font-size: 1.5rem; margin-bottom: 2rem; -webkit-text-fill-color: #fff;">Yangi Profil Ochish</h2>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #020617; min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow-x: hidden; padding: 20px; }
+    .auth-window { width: 100%; max-width: 1100px; height: 750px; background: #0b0c14; border-radius: 32px; border: 1px solid rgba(255, 255, 255, 0.05); display: flex; overflow: hidden; box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5); }
+    .visual-side { flex: 1.2; background: linear-gradient(135deg, #1e293b, #0f172a); position: relative; padding: 60px; display: flex; flex-direction: column; justify-content: flex-end; }
+    .visual-content { position: relative; z-index: 2; }
+    .visual-content h1 { font-size: 2.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 20px; color: #fff; }
+    .visual-content p { font-size: 1.1rem; opacity: 0.6; font-weight: 500; color: #fff; }
+    .form-side { flex: 1; padding: 40px 60px; display: flex; flex-direction: column; justify-content: center; background: #0b0c14; overflow-y: auto; }
+    .form-header h2 { font-size: 2.22rem; font-weight: 800; margin-bottom: 15px; color: #fff; }
+    .form-header p { color: #64748b; font-weight: 600; font-size: 1rem; margin-bottom: 30px; }
+    .form-header span { color: #3b82f6; cursor: pointer; text-decoration: underline; font-weight: 700; }
+    .form-group { margin-bottom: 20px; }
+    .form-label { display: block; font-size: 0.7rem; font-weight: 900; color: #475569; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+    .input-field, select { width: 100%; padding: 15px 20px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 12px; color: #fff; font-size: 0.95rem; font-weight: 500; transition: 0.3s; color-scheme: dark; }
+    .input-field:focus, select:focus { border-color: #6366f1; background: rgba(99,102,241,0.03); outline: none; }
+    .submit-btn { width: 100%; padding: 18px; background: #6366f1; border: none; border-radius: 12px; color: #fff; font-size: 1rem; font-weight: 800; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+    .submit-btn:hover { background: #4f46e5; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3); }
+    #regError { display: none; color: #ff6b6b; margin-top: 15px; font-weight: 700; font-size: 0.8rem; text-align: center; }
     
-    <form id="registerForm">
-      <div style="margin-bottom: 1.2rem; text-align: left;">
-        <label style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px;">F.I.SH</label>
-        <input type="text" placeholder="Ism familiyangiz" required style="width: 100%; padding: 12px 15px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 10px; color: #fff; outline: none;">
+    @media (max-width: 900px) {
+      .visual-side { display: none; }
+      .auth-window { max-width: 500px; height: auto; min-height: unset; }
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-window">
+    <div class="visual-side">
+      <div style="position:absolute; top:40px; left:40px; font-weight:900; font-size:1.8rem; color:#6366f1;">EduGravity</div>
+      <div class="visual-content">
+        <h1>Cloud Identity <br> Enrollment</h1>
+        <p>Premium ta'lim ekotizimiga a'zo bo'ling.</p>
       </div>
-      
-      <div style="margin-bottom: 1.2rem; text-align: left;">
-        <label style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px;">Rolingizni tanlang</label>
-        <select required style="width: 100%; padding: 12px 15px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 10px; color: #fff; outline: none;">
-           <option value="student">Talaba</option>
-           <option value="teacher">O'qituvchi</option>
-           <option value="uni">Xususiy Universitet</option>
-        </select>
-      </div>
-
-      <div style="margin-bottom: 1.2rem; text-align: left;">
-        <label style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px;">Login</label>
-        <input type="text" placeholder="user123" required style="width: 100%; padding: 12px 15px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 10px; color: #fff; outline: none;">
-      </div>
-
-      <div style="margin-bottom: 2rem; text-align: left;">
-        <label style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px;">Parol</label>
-        <input type="password" placeholder="********" required style="width: 100%; padding: 12px 15px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 10px; color: #fff; outline: none;">
-      </div>
-
-      <button type="submit" class="btn-premium" style="width: 100%; padding: 15px; font-size: 1rem;">Ro'yxatdan O'tish</button>
-    </form>
-
-    <div style="margin-top: 2rem; font-size: 0.85rem; color: var(--text-muted);">
-      Profil bormi? <a href="login.html" style="color: var(--primary); text-decoration: none; font-weight: 700;">Kirish</a>
+    </div>
+    <div class="form-side">
+      <header class="form-header">
+        <h2>Ro'yxatdan O'tish</h2>
+        <p>Profilingiz bormi? <span onclick="window.location.href='login.html'">Kirish</span></p>
+      </header>
+      <form id="regForm">
+        <div class="form-group">
+          <label class="form-label">To'liq ism (F.I.SH)</label>
+          <input type="text" id="fullname" class="input-field" placeholder="Masalan: Sardor Karimov" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Status (Rol)</label>
+          <select id="role">
+            <option value="student">Talaba</option>
+            <option value="teacher">Ustoz (Teacher)</option>
+            <option value="uni">Universitet (OTM)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Manzili yoki Login</label>
+          <input type="text" id="email" class="input-field" placeholder="user@edugravity.uz" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Parol</label>
+          <input type="password" id="password" class="input-field" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="submit-btn" id="regBtn">Hisob yaratish</button>
+      </form>
+      <div id="regError">❌ Xatolik yuz berdi.</div>
     </div>
   </div>
 
   <script>
-    document.getElementById('registerForm').addEventListener('submit', function(e) {
+    // Redirect if already logged in
+    (function() {
+      const role = localStorage.getItem('userRole');
+      if (role) {
+        if (role === 'admin') window.location.replace('admin-dashboard.html');
+        else if (role === 'uni') window.location.replace('uni-dashboard.html');
+        else if (role === 'teacher') window.location.replace('teacher-dashboard.html');
+        else if (role === 'student') window.location.replace('student-dashboard.html');
+      }
+    })();
+
+    document.getElementById('regForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      alert('Tabriklaymiz! Ro\'yxatdan o\'tish muvaffaqiyatli yakunlandi. Endi tizimga kirishingiz mumkin.');
-      window.location.href = 'login.html';
+      const btn = document.getElementById('regBtn');
+      const err = document.getElementById('regError');
+      const fullname = document.getElementById('fullname').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const role = document.getElementById('role').value;
+
+      btn.innerText = 'Saqlanmoqda...';
+      btn.disabled = true;
+      err.style.display = 'none';
+
+      // Default users (forbidden to register with these logins)
+      const defaultUsers = ['admin', 'teacher', 'student', 'uni', 'madina', 'malikova'];
+
+      // Get registered users from localStorage
+      const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '{}');
+
+      setTimeout(function() {
+        if (defaultUsers.includes(email) || registeredUsers[email]) {
+          err.innerText = "❌ Bu login allaqachon band!";
+          err.style.display = 'block';
+          btn.innerText = 'Hisob yaratish';
+          btn.disabled = false;
+        } else {
+          // Save user
+          registeredUsers[email] = {
+            pass: password,
+            role: role,
+            name: fullname
+          };
+          localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+
+          // Auto Login
+          localStorage.setItem('userRole', role);
+          localStorage.setItem('currentUser', email);
+          localStorage.setItem('userName', fullname);
+
+          alert("Muvaffaqiyatli ro'yxatdan o'tdingiz!");
+          
+          if (role === 'admin') window.location.href = 'admin-dashboard.html';
+          else if (role === 'uni') window.location.href = 'uni-dashboard.html';
+          else if (role === 'teacher') window.location.href = 'teacher-dashboard.html';
+          else if (role === 'student') window.location.href = 'student-dashboard.html';
+        }
+      }, 1000);
     });
   </script>
 </body>

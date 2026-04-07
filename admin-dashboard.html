@@ -1,309 +1,201 @@
 <!DOCTYPE html>
 <html lang="uz">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Paneli | EduGravity</title>
-  <link rel="stylesheet" href="style.css">
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Admin Paneli | EduGravity</title>
+   <meta name="description" content="EduGravity admin boshqaruv markazi - foydalanuvchilar, statistika va sozlamalar." />
+   <link rel="stylesheet" href="style.css">
+
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <style>
+      .btn-action { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 6px; color: #fff; padding: 5px 8px; cursor: pointer; transition: 0.3s; font-size: 0.8rem; }
+      .btn-action:hover { background: rgba(255,255,255,0.1); transform: scale(1.1); }
+      .btn-action.delete:hover { border-color: #ff4d4d; color: #ff4d4d; }
+      .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 1000; }
+      .modal-content { max-width: 500px; width: 90%; animation: modalFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); background: linear-gradient(145deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9)); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+      @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.8) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+   </style>
 </head>
+
 <body>
-  <div class="bg-glow glow-1"></div>
-  <div class="bg-glow glow-2"></div>
+   <script>
+      (function () {
+         const role = localStorage.getItem('userRole');
+         if (!role || role !== 'admin') { window.location.replace('login.html'); }
+      })();
+   </script>
+   <div class="bg-glow glow-1"></div>
+   <div class="bg-glow glow-2"></div>
 
-  <nav>
-    <div class="logo">
-      <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="20" cy="20" r="18" stroke="url(#logoGrad)" stroke-width="3"/>
-        <path d="M20 10L10 25H30L20 10Z" fill="white"/>
-      </svg>
-      EduGravity
-    </div>
-    <ul class="nav-links">
-      <li><a href="index.html" data-i18n="nav_home">Asosiy</a></li>
-      <li><a href="admin-student-view.html" data-i18n="nav_student_view">Talaba Ko'rinishi</a></li>
-      <li><a href="admin-teacher-view.html" data-i18n="nav_teacher_view">Ustoz Ko'rinishi</a></li>
-      <li><a href="admin-dashboard.html" class="active" data-i18n="nav_admin_dash">Admin Paneli</a></li>
-      <li><a href="jobs.html" data-i18n="nav_jobs">Ish Kafolati</a></li>
-    </ul>
-    <div class="nav-actions">
-       <div class="theme-toggle" onclick="toggleTheme()">🌙</div>
-       <div class="notif-wrapper">
-         <span class="notif-bell">🔔</span>
-         <div class="notif-dot"></div>
-         <div class="notif-dropdown">
-           <div class="notif-item" data-i18n="notif_1">Xush kelibsiz! EduGravity tizimi muvaffaqiyatli yuklandi.</div>
-         </div>
-       </div>
-       <div class="lang-switcher">
-        <span>UZ</span>
-        <div class="lang-dropdown">
-          <div class="lang-opt" onclick="setLanguage('uz')">O'zbekcha</div>
-          <div class="lang-opt" onclick="setLanguage('ru')">Русский</div>
-          <div class="lang-opt" onclick="setLanguage('en')">English</div>
-        </div>
+   <nav>
+      <div class="logo">
+         <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="18" stroke="url(#logoGrad)" stroke-width="3" />
+            <path d="M20 10L10 25H30L20 10Z" fill="white" />
+         </svg>
+         EduGravity
       </div>
-       <div style="text-align: right;">
-          <p style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);" data-i18n="nav_you_admin">Siz (ADMIN)</p>
-          <a href="#" onclick="logout()" style="font-size: 0.7rem; color: #ff4d4d; text-decoration: none; cursor: pointer; font-weight: 800;" data-i18n="nav_logout">[ Chiqish ]</a>
-       </div>
-       <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 800; color: #000;">AD</div>
-    </div>
-  </nav>
+      <ul class="nav-links">
+         <li><a href="index.html" data-i18n="nav_home">Asosiy</a></li>
+         <li><a href="admin-student-view.html" data-i18n="nav_student_view">Talaba Ko'rinishi</a></li>
+         <li><a href="admin-teacher-view.html" data-i18n="nav_teacher_view">Ustoz Ko'rinishi</a></li>
+         <li><a href="admin-dashboard.html" class="active" data-i18n="nav_admin_dash">Admin Paneli</a></li>
+         <li><a href="jobs.html" data-i18n="nav_jobs">Ish Kafolati</a></li>
+      </ul>
+      <div class="nav-actions">
+         <div class="admin-profile-group" style="display: flex; align-items: center; gap: 15px; background: rgba(255,255,255,0.03); padding: 5px 15px; border-radius: 30px; border: 1px solid var(--glass-border);">
+            <div class="theme-toggle" onclick="toggleTheme()" style="cursor: pointer; font-size: 1.1rem;">🌙</div>
+            <div class="lang-switcher" style="margin: 0;">
+               <span style="font-size: 0.8rem; font-weight: 800;">UZ</span>
+               <div class="lang-dropdown" style="right: -10px;">
+                  <div class="lang-opt" onclick="setLanguage('uz')">O'zbekcha</div>
+                  <div class="lang-opt" onclick="setLanguage('ru')">Русский</div>
+                  <div class="lang-opt" onclick="setLanguage('en')">English</div>
+               </div>
+            </div>
+            <div style="width: 1px; height: 20px; background: var(--glass-border); margin: 0 5px;"></div>
+            <div style="text-align: right;">
+               <p id="navUserName" style="font-size: 0.8rem; font-weight: 700; color: var(--text-main); margin:0;">Admin</p>
+               <a href="#" onclick="logout()" style="font-size: 0.7rem; color: #ff4d4d; text-decoration: none; cursor: pointer; font-weight: 800;" data-i18n="nav_logout">[ Chiqish ]</a>
+            </div>
+            <div id="navUserAvatar" style="width: 32px; height: 32px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 800; color: #000; font-size: 0.7rem;">AD</div>
+         </div>
+      </div>
+   </nav>
 
-  <section class="glass-section" style="min-height: 80vh;">
+   <section class="glass-section" style="min-height: 80vh;">
       <div style="text-align: center; margin-bottom: 4rem;">
          <h2 style="margin-bottom: 1rem;" data-i18n="ad_title">Admin Boshqaruv Markazi</h2>
-         <p style="color: var(--text-muted);" data-i18n="ad_desc">Tizimdagi barcha foydalanuvchilar va ma'lumotlarni nazorat qilish.</p>
-      </div>
-
-      <!-- System Statistics Row -->
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem;">
-         <div class="glass-card" style="text-align: center; border-left: 4px solid var(--primary);">
-            <p style="font-size: 0.8rem; color: var(--text-muted);" data-i18n="ad_total_students">Jami Talabalar</p>
-            <h3 style="font-size: 2.5rem; margin: 10px 0;">1,240</h3>
-            <span style="color: var(--success); font-size: 0.7rem;" data-i18n="ad_stat_students_today">+12 bugun</span>
-         </div>
-         <div class="glass-card" style="text-align: center; border-left: 4px solid var(--secondary);">
-            <p style="font-size: 0.8rem; color: var(--text-muted);" data-i18n="ad_total_teachers">Jami Ustozlar</p>
-            <h3 style="font-size: 2.5rem; margin: 10px 0;">85</h3>
-            <span style="color: var(--primary); font-size: 0.7rem;" data-i18n="ad_stat_teachers_active">Faol: 82</span>
-         </div>
-         <div class="glass-card" style="text-align: center; border-left: 4px solid var(--success);">
-            <p style="font-size: 0.8rem; color: var(--text-muted);" data-i18n="ad_total_unis">Hamkor OTMlar</p>
-            <h3 style="font-size: 2.5rem; margin: 10px 0;">12</h3>
-            <span style="color: var(--success); font-size: 0.7rem;" data-i18n="ad_stat_unis_private">3 ta xususiy</span>
-         </div>
+         <p style="color: var(--text-muted);" data-i18n="ad_desc">Foydalanuvchilar va tizim nazorati.</p>
       </div>
 
       <div class="glass-card" style="margin-bottom: 3rem; padding: 0;">
          <div style="padding: 2rem; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center;">
-            <h3 style="margin: 0;" data-i18n="ad_users_title">Barcha Foydalanuvchilar Boshqaruvi</h3>
-            <div style="display: flex; gap: 10px;">
-               <input type="text" placeholder="Qidirish..." data-i18n-hold="ad_search_ph" style="padding: 8px 15px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 5px; color: #fff; outline: none; font-size: 0.8rem;">
-               <button class="btn-premium" style="font-size: 0.75rem; padding: 8px 15px;" data-i18n="ad_btn_filter">Filtrlash</button>
-            </div>
+            <h3 style="margin: 0;" data-i18n="ad_users_title">Foydalanuvchilar Boshqaruvi</h3>
+            <button class="btn-premium" onclick="toggleModal('Yangi Foydalanuvchi', 'Yangi foydalanuvchi qo\'shish tizimi yaratilmoqda.')">Qo'shish</button>
          </div>
          <table style="width: 100%; border-collapse: collapse; text-align: left;">
             <thead>
-               <tr style="border-bottom: 1px solid var(--glass-border); background: rgba(255,255,255,0.02);">
-                  <th style="padding: 1.5rem;" data-i18n="ad_th_name">Foydalanuvchi</th>
+               <tr style="border-bottom: 1px solid var(--glass-border);">
+                  <th style="padding: 1.5rem;" data-i18n="ad_th_user">Foydalanuvchi</th>
                   <th style="padding: 1.5rem;" data-i18n="ad_th_role">Roli</th>
-                  <th style="padding: 1.5rem;" data-i18n="ad_th_id">ID / Login</th>
                   <th style="padding: 1.5rem;" data-i18n="ad_th_status">Status</th>
                   <th style="padding: 1.5rem;" data-i18n="ad_th_action">Amal</th>
                </tr>
             </thead>
-            <tbody>
-               <tr style="border-bottom: 1px solid var(--glass-border);">
-                  <td style="padding: 1.2rem; display: flex; align-items: center; gap: 12px;">
-                     <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: #000;">SK</div>
-                     <div>
-                        <p style="font-weight: 700; font-size: 0.9rem;">Sardor Karimov</p>
-                        <p style="font-size: 0.7rem; color: var(--text-muted);">student@edugravity.uz</p>
-                     </div>
-                  </td>
-                  <td style="padding: 1.2rem;"><span style="font-size: 0.8rem;" data-i18n="ad_role_student">Talaba</span></td>
-                  <td style="padding: 1.2rem;"><span style="font-family: monospace; font-size: 0.8rem;">student</span></td>
-                  <td style="padding: 1.2rem;"><span style="color: var(--success); font-size: 0.75rem; font-weight: 800;" data-i18n="ad_status_online">● Online</span></td>
-                  <td style="padding: 1.2rem;"><button style="background: transparent; border: 1px solid var(--glass-border); border-radius: 5px; color: #fff; padding: 5px 10px; cursor: pointer; font-size: 0.7rem;" data-i18n="ad_btn_edit">Tahrirlash</button></td>
-               </tr>
-               <tr style="border-bottom: 1px solid var(--glass-border);">
-                  <td style="padding: 1.2rem; display: flex; align-items: center; gap: 12px;">
-                     <div style="width: 32px; height: 32px; border-radius: 50%; background: #ff7eb3; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: #fff;">MA</div>
-                     <div>
-                        <p style="font-weight: 700; font-size: 0.9rem;">Madina Akramova</p>
-                        <p style="font-size: 0.7rem; color: var(--text-muted);">madina@student.uz</p>
-                     </div>
-                  </td>
-                  <td style="padding: 1.2rem;"><span style="font-size: 0.8rem;" data-i18n="ad_role_student">Talaba</span></td>
-                  <td style="padding: 1.2rem;"><span style="font-family: monospace; font-size: 0.8rem;">madina</span></td>
-                  <td style="padding: 1.2rem;"><span style="color: var(--success); font-size: 0.75rem; font-weight: 800;" data-i18n="ad_status_online">● Online</span></td>
-                  <td style="padding: 1.2rem;"><button style="background: transparent; border: 1px solid var(--glass-border); border-radius: 5px; color: #fff; padding: 5px 10px; cursor: pointer; font-size: 0.7rem;" data-i18n="ad_btn_edit">Tahrirlash</button></td>
-               </tr>
-               <tr style="border-bottom: 1px solid var(--glass-border);">
-                  <td style="padding: 1.2rem; display: flex; align-items: center; gap: 12px;">
-                     <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--secondary); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: #fff;">AN</div>
-                     <div>
-                        <p style="font-weight: 700; font-size: 0.9rem;">Prof. Alisherov N.</p>
-                        <p style="font-size: 0.7rem; color: var(--text-muted);">alisherov@uni.uz</p>
-                     </div>
-                  </td>
-                  <td style="padding: 1.2rem;"><span style="font-size: 0.8rem;" data-i18n="ad_role_teacher">O'qituvchi</span></td>
-                  <td style="padding: 1.2rem;"><span style="font-family: monospace; font-size: 0.8rem;">teacher</span></td>
-                  <td style="padding: 1.2rem;"><span style="color: var(--text-muted); font-size: 0.75rem;" data-i18n="ad_status_offline">● Offline</span></td>
-                  <td style="padding: 1.2rem;"><button style="background: transparent; border: 1px solid var(--glass-border); border-radius: 5px; color: #fff; padding: 5px 10px; cursor: pointer; font-size: 0.7rem;" data-i18n="ad_btn_edit">Tahrirlash</button></td>
-               </tr>
-               <tr style="border-bottom: 1px solid var(--glass-border);">
-                  <td style="padding: 1.2rem; display: flex; align-items: center; gap: 12px;">
-                     <div style="width: 32px; height: 32px; border-radius: 50%; background: #6fe7dd; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: #000;">JM</div>
-                     <div>
-                        <p style="font-weight: 700; font-size: 0.9rem;">Dr. Malikova J.</p>
-                        <p style="font-size: 0.7rem; color: var(--text-muted);">malikova@edu.uz</p>
-                     </div>
-                  </td>
-                  <td style="padding: 1.2rem;"><span style="font-size: 0.8rem;" data-i18n="ad_role_teacher">O'qituvchi</span></td>
-                  <td style="padding: 1.2rem;"><span style="font-family: monospace; font-size: 0.8rem;">malikova</span></td>
-                  <td style="padding: 1.2rem;"><span style="color: var(--success); font-size: 0.75rem; font-weight: 800;" data-i18n="ad_status_online">● Online</span></td>
-                  <td style="padding: 1.2rem;"><button style="background: transparent; border: 1px solid var(--glass-border); border-radius: 5px; color: #fff; padding: 5px 10px; cursor: pointer; font-size: 0.7rem;" data-i18n="ad_btn_edit">Tahrirlash</button></td>
-               </tr>
-               <tr style="border-bottom: 1px solid var(--glass-border);">
-                  <td style="padding: 1.2rem; display: flex; align-items: center; gap: 12px;">
-                     <div style="width: 32px; height: 32px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: #000;">AU</div>
-                     <div>
-                        <p style="font-weight: 700; font-size: 0.9rem;">Amity University</p>
-                        <p style="font-size: 0.7rem; color: var(--text-muted);">admin@amity.uz</p>
-                     </div>
-                  </td>
-                  <td style="padding: 1.2rem;"><span style="font-size: 0.8rem;" data-i18n="ad_role_uni">Unversitet</span></td>
-                  <td style="padding: 1.2rem;"><span style="font-family: monospace; font-size: 0.8rem;">amity</span></td>
-                  <td style="padding: 1.2rem;"><span style="color: var(--success); font-size: 0.75rem; font-weight: 800;" data-i18n="ad_status_online">● Online</span></td>
-                  <td style="padding: 1.2rem;"><button style="background: transparent; border: 1px solid var(--glass-border); border-radius: 5px; color: #fff; padding: 5px 10px; cursor: pointer; font-size: 0.7rem;" data-i18n="ad_btn_edit">Tahrirlash</button></td>
-               </tr>
-               <tr style="border-bottom: 1px solid var(--glass-border);">
-                  <td style="padding: 1.2rem; display: flex; align-items: center; gap: 12px;">
-                     <div style="width: 32px; height: 32px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: #000;">WU</div>
-                     <div>
-                        <p style="font-weight: 700; font-size: 0.9rem;">Webster University</p>
-                        <p style="font-size: 0.7rem; color: var(--text-muted);">webster@edu.uz</p>
-                     </div>
-                  </td>
-                  <td style="padding: 1.2rem;"><span style="font-size: 0.8rem;" data-i18n="ad_role_uni">Unversitet</span></td>
-                  <td style="padding: 1.2rem;"><span style="font-family: monospace; font-size: 0.8rem;">webster</span></td>
-                  <td style="padding: 1.2rem;"><span style="color: var(--text-muted); font-size: 0.75rem;" data-i18n="ad_status_offline">● Offline</span></td>
-                  <td style="padding: 1.2rem;"><button style="background: transparent; border: 1px solid var(--glass-border); border-radius: 5px; color: #fff; padding: 5px 10px; cursor: pointer; font-size: 0.7rem;" data-i18n="ad_btn_edit">Tahrirlash</button></td>
-               </tr>
+            <tbody id="userTableBody">
+               <!-- Dinamik ma'lumotlar -->
             </tbody>
          </table>
       </div>
 
       <div class="glass-card" style="margin-bottom: 3rem;">
-         <h3 style="margin-bottom: 20px;" data-i18n="ad_chart_title">Tizim Faolligi va O'zlashtirish Dinamikasi</h3>
-         <div style="height: 300px; position: relative;">
-            <canvas id="adminSystemChart"></canvas>
-         </div>
+         <h3 style="margin-bottom: 20px;">Tizim Faolligi Dinamikasi</h3>
+         <div style="height: 300px;"><canvas id="adminSystemChart"></canvas></div>
       </div>
 
       <div class="feature-grid">
          <div class="glass-card" style="border-top: 4px solid var(--primary);">
-            <div class="card-icon">👥</div>
-            <h3 data-i18n="ad_card_users_title">Foydalanuvchilar Paneli</h3>
-            <p style="color: var(--text-muted); margin: 15px 0;" data-i18n="ad_card_users_desc">Barcha o'quvchi va o'qituvchi profillarini boshqarish, yangisini qo'shish.</p>
-            <button class="btn-premium" style="width: 100%;" data-i18n="ad_card_users_btn">Boshqarish</button>
+            <h3>Tizim Statistikasi</h3>
+            <p style="color: var(--text-muted); margin: 15px 0;">Cloud server holati va o'zlashtirish tahlili.</p>
+            <button class="btn-premium" style="width: 100%;" onclick="openTools()">Statistika</button>
          </div>
-
-         <div class="glass-card" style="border-top: 4px solid var(--secondary);">
-            <div class="card-icon" style="background: var(--secondary);">🔬</div>
-            <h3 data-i18n="ad_card_stat_title">Tizim Statistikasi</h3>
-            <p style="color: var(--text-muted); margin: 15px 0;" data-i18n="ad_card_stat_desc">Umumiy o'zlashtirish, faollik va server holati haqida batafsil ma'lumot.</p>
-            <button class="btn-premium" style="width: 100%; border-color: var(--secondary);" data-i18n="ad_card_stat_btn">Statistika</button>
-         </div>
-
          <div class="glass-card" style="border-top: 4px solid var(--success);">
-            <div class="card-icon" style="background: var(--success);">🏛️</div>
-            <h3 data-i18n="ad_card_uni_title">Universitet Sozlamalari</h3>
-            <p style="color: var(--text-muted); margin: 15px 0;" data-i18n="ad_card_uni_desc">Guruhlar, fanlar va akademik kalendarni sozlash.</p>
-            <button class="btn-premium" style="width: 100%; border-color: var(--success);" data-i18n="ad_card_uni_btn">Sozlash</button>
+            <h3>Universitet Sozlamalari</h3>
+            <p style="color: var(--text-muted); margin: 15px 0;">OTMlar va akademik kalendarni boshqarish.</p>
+            <button class="btn-premium" style="width: 100%; border-color: var(--success);" onclick="openUnis()">Sozlash</button>
          </div>
       </div>
+   </section>
 
-      <div class="glass-card" style="margin-top: 3rem;">
-         <h3 data-i18n="ad_recent_title">Yaqindagi Amallar</h3>
-         <div style="margin-top: 1.5rem;">
-            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--glass-border); padding: 15px 0;">
-               <span data-i18n="ad_recent_1">Prof. Alisherov baho qo'ydi (CS-102)</span>
-               <span style="color: var(--text-muted); font-size: 0.8rem;" data-i18n="ad_recent_1_time">2 daqiqa oldin</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--glass-border); padding: 15px 0;">
-               <span data-i18n="ad_recent_2">Sardor Karimov yangi IELTS sertifikat yukloadi</span>
-               <span style="color: var(--text-muted); font-size: 0.8rem;" data-i18n="ad_recent_2_time">15 daqiqa oldin</span>
-            </div>
+   <div id="adminModal" class="modal-overlay">
+      <div class="glass-card modal-content" style="padding: 40px; text-align: center; border-radius: 20px;">
+         <h2 id="modalTitle">Boshqaruv</h2>
+         <p id="modalDesc" style="color: var(--text-muted); margin: 20px 0;">Amalni tasdiqlang.</p>
+         <div style="display: flex; gap: 15px; margin-top: 30px;">
+            <button class="btn-premium" style="flex: 1;" onclick="closeModal()">Bekor qilish</button>
+            <button class="btn-premium" style="flex: 1; border-color: var(--success);" onclick="confirmAction()">Tasdiqlash</button>
          </div>
       </div>
-  </section>
+   </div>
 
-  <footer class="main-footer">
-    <div class="footer-content">
-      <div class="footer-section">
-        <h4 data-i18n="f_about_title">Tashkilot haqida</h4>
-        <ul>
-          <li><a href="#" data-i18n="f_about_1">Biz haqimizda</a></li>
-          <li><a href="#" data-i18n="f_about_2">Yangiliklar</a></li>
-          <li><a href="#" data-i18n="f_about_3">Aloqa uchun ma'lumotlar</a></li>
-        </ul>
-      </div>
-      
-      <div class="footer-section">
-        <h4 data-i18n="f_opp_title">Imkoniyatlar</h4>
-        <ul>
-          <li><a href="#" data-i18n="f_opp_1">O'qituvchilarga</a></li>
-          <li><a href="#" data-i18n="f_opp_2">Ota-onalarga</a></li>
-          <li><a href="#" data-i18n="f_opp_3">O'quvchilarga</a></li>
-          <li><a href="#" data-i18n="f_opp_4">Davlat organlariga</a></li>
-        </ul>
-      </div>
+   <script src="script.js"></script>
+   <script>
+      function toggleModal(title, desc) {
+         document.getElementById('modalTitle').innerText = title;
+         document.getElementById('modalDesc').innerText = desc;
+         document.getElementById('adminModal').style.display = 'flex';
+      }
+      function closeModal() { document.getElementById('adminModal').style.display = 'none'; }
+      function confirmAction() { alert("Amal muvaffaqiyatli bajarildi!"); closeModal(); }
 
-      <div class="footer-section">
-        <h4 data-i18n="f_support_title">Qo'llab-quvvatlash</h4>
-        <ul>
-          <li><a href="#" style="color: #14b8a6;" data-i18n="f_support_1">Qo'llab-quvvatlash xizmati portal</a></li>
-        </ul>
-        <a href="#" class="btn-connect" data-i18n="btn_connect">Tashkilotni ulash</a>
-      </div>
-    </div>
-    
-    <div class="footer-bottom" data-i18n="f_copyright">
-      &copy; 2026 EduGravity. Barcha huquqlar himoyalangan.
-    </div>
-  </footer>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="script.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const ctxAdmin = document.getElementById('adminSystemChart').getContext('2d');
-        
-        new Chart(ctxAdmin, {
-            type: 'bar',
+      function deleteUser(login) {
+         const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '{}');
+         if(confirm(`${login}ni haqiqatan o'chirmoqchimisiz?`)) {
+            delete registeredUsers[login];
+            localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+            loadUsers();
+            alert("Foydalanuvchi tizimdan o'chirildi.");
+         }
+      }
+      function editUser(login) { 
+         const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '{}');
+         const user = registeredUsers[login];
+         toggleModal("Tahrirlash", `${user ? user.name : login} ma'lumotlarini o'zgartirish.`); 
+      }
+      function openUnis() { toggleModal("OTM Sozlamalari", "Guruhlar va akademik kalendar boshqaruvi."); }
+      function openTools() { toggleModal("Tizim Statistikasi", "Server loglari va faollik tahlili."); }
+
+      function loadUsers() {
+         const tbody = document.getElementById('userTableBody');
+         const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '{}');
+         
+         const defaultUsers = {
+           'admin': { role: 'Admin', name: 'Tizim Admini' },
+           'teacher': { role: 'Ustoz', name: 'Prof. Alisherov N.' },
+           'student': { role: 'Talaba', name: 'Sardor Karimov' },
+           'uni': { role: 'OTM', name: 'Amity University' }
+         };
+
+         const all = Object.assign({}, defaultUsers, registeredUsers);
+         tbody.innerHTML = '';
+
+         Object.entries(all).forEach(([login, data]) => {
+            const roleName = data.role.charAt(0).toUpperCase() + data.role.slice(1);
+            const initials = data.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+            
+            const tr = document.createElement('tr');
+            tr.style.borderBottom = '1px solid var(--glass-border)';
+            tr.innerHTML = `
+               <td style="padding: 1.2rem; display: flex; align-items: center; gap: 12px;">
+                  <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: #000;">${initials}</div>
+                  <p style="font-weight: 700; font-size: 0.9rem; margin:0;">${data.name}</p>
+               </td>
+               <td style="padding: 1.2rem;">${roleName}</td>
+               <td style="padding: 1.2rem; color: var(--success); font-weight: 800;">● Active</td>
+               <td style="padding: 1.2rem; display: flex; gap: 10px;">
+                  <button class="btn-action" onclick="editUser('${login}')">✏️</button>
+                  <button class="btn-action delete" onclick="deleteUser('${login}')">🗑️</button>
+               </td>
+            `;
+            tbody.appendChild(tr);
+         });
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+         loadUsers();
+         const ctx = document.getElementById('adminSystemChart').getContext('2d');
+         new Chart(ctx, {
+            type: 'line',
             data: {
-                labels: ['Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Juma', 'Shanba'],
-                datasets: [
-                    {
-                        label: 'Guruhlar Faolligi',
-                        data: [75, 82, 90, 85, 95, 40],
-                        backgroundColor: 'rgba(0, 210, 255, 0.7)',
-                        borderRadius: 5
-                    },
-                    {
-                        label: 'Yangi Foydalanuvchilar',
-                        data: [15, 20, 18, 25, 30, 10],
-                        backgroundColor: 'rgba(144, 0, 255, 0.7)',
-                        borderRadius: 5
-                    }
-                ]
+               labels: ['Du', 'Se', 'Ch', 'Pa', 'Ju', 'Sha'],
+               datasets: [{ label: 'System Activity', data: [65, 59, 80, 81, 56, 55], borderColor: '#6366f1', tension: 0.3, fill: true, backgroundColor: 'rgba(99,102,241,0.1)' }]
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: '#ccc',
-                            font: { family: 'Inter', size: 12 }
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        grid: { color: 'rgba(255,255,255,0.05)' },
-                        ticks: { color: '#ccc' }
-                    },
-                    y: {
-                        grid: { color: 'rgba(255,255,255,0.05)' },
-                        ticks: { color: '#ccc' },
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    });
-  </script></body>
+            options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#ccc' } }, x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#ccc' } } }, plugins: { legend: { display: false } } }
+         });
+      });
+   </script>
+</body>
 </html>

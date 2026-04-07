@@ -7,6 +7,12 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<script>
+  (function() {
+    const role = localStorage.getItem('userRole');
+    if (!role || role !== 'admin') { window.location.replace('login.html'); }
+  })();
+</script>
   <div class="bg-glow glow-1"></div>
   <div class="bg-glow glow-2"></div>
 
@@ -43,15 +49,15 @@
         </div>
       </div>
        <div style="text-align: right;">
-          <p style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);">Siz (ADMIN)</p>
+          <p id="navUserName" style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);">Siz (ADMIN)</p>
           <a href="#" onclick="logout()" style="font-size: 0.7rem; color: #ff4d4d; text-decoration: none; cursor: pointer; font-weight: 800;" data-i18n="nav_logout">[ Chiqish ]</a>
        </div>
-       <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 800; color: #000;">AD</div>
+       <div id="navUserAvatar" style="width: 40px; height: 40px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 800; color: #000;">AD</div>
     </div>
   </nav>
 
   <section class="glass-section">
-    <div style="background: rgba(144, 0, 255, 0.1); padding: 1rem; border-radius: 10px; border: 1px solid var(--secondary); margin-bottom: 2rem; color: var(--secondary); text-align: center; font-weight: 700;">
+    <div style="background: rgba(144, 0, 255, 0.1); padding: 1rem; border-radius: 10px; border: 1px solid var(--secondary); margin-bottom: 2rem; color: var(--secondary); text-align: center; font-weight: 700;" data-i18n="ad_teacher_view_banner">
        ⚠️ ADMIN REJIMI: Siz hozirda o'qituvchi (Prof. Alisherov N.) profilini ko'rmoqdasiz.
     </div>
     
@@ -60,9 +66,9 @@
       <!-- Sidebar / Statistics -->
       <div>
         <div class="glass-card" style="margin-bottom: 2rem;">
-           <h3 style="margin-bottom: 2rem;">Guruh Ko'rsatkichlari</h3>
+           <h3 style="margin-bottom: 2rem;" data-i18n="td_stats_title">Guruh Ko'rsatkichlari</h3>
            <div style="margin-bottom: 25px;">
-              <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">O'rtacha GPA</p>
+              <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;" data-i18n="td_avg_gpa">O'rtacha GPA</p>
               <div style="display: flex; align-items: center; gap: 15px;">
                  <h4 style="font-size: 1.5rem; color: var(--success);">4.62</h4>
                  <span style="font-size: 0.7rem; color: var(--success);">↑ 2.4%</span>
@@ -74,16 +80,16 @@
       <!-- Student List -->
       <div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-           <h2>Talabalar Ro'yxati (CS-102)</h2>
+           <h2 data-i18n="td_list_title">Talabalar Ro'yxati (CS-102)</h2>
         </div>
 
         <div class="glass-card" style="padding: 0;">
            <table style="width: 100%; border-collapse: collapse; text-align: left;">
               <thead>
                  <tr style="border-bottom: 1px solid var(--glass-border); background: rgba(255,255,255,0.02);">
-                    <th style="padding: 1.5rem;">F.I.SH</th>
-                    <th style="padding: 1.5rem;">Ball (100)</th>
-                    <th style="padding: 1.5rem;">Reyting</th>
+                    <th style="padding: 1.5rem;" data-i18n="td_th_name">F.I.SH</th>
+                    <th style="padding: 1.5rem;" data-i18n="td_th_score">Ball (100)</th>
+                    <th style="padding: 1.5rem;" data-i18n="td_th_rank">Reyting</th>
                  </tr>
               </thead>
               <tbody>
@@ -107,9 +113,9 @@
       <div class="footer-section">
         <h4 data-i18n="f_about_title">Tashkilot haqida</h4>
         <ul>
-          <li><a href="#" data-i18n="f_about_1">Biz haqimizda</a></li>
-          <li><a href="#" data-i18n="f_about_2">Yangiliklar</a></li>
-          <li><a href="#" data-i18n="f_about_3">Aloqa uchun ma'lumotlar</a></li>
+          <li><a href="about.html" data-i18n="f_about_1">Biz haqimizda</a></li>
+          <li><a href="about.html#news" data-i18n="f_about_2">Yangiliklar</a></li>
+          <li><a href="about.html#contact" data-i18n="f_about_3">Aloqa uchun ma'lumotlar</a></li>
         </ul>
       </div>
       

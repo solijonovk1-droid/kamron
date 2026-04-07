@@ -7,6 +7,12 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<script>
+  (function() {
+    const role = localStorage.getItem('userRole');
+    if (!role || role !== 'admin') { window.location.replace('login.html'); }
+  })();
+</script>
   <div class="bg-glow glow-1"></div>
   <div class="bg-glow glow-2"></div>
 
@@ -43,15 +49,15 @@
         </div>
       </div>
        <div style="text-align: right;">
-          <p style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);">Siz (ADMIN)</p>
+          <p id="navUserName" style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);">Siz (ADMIN)</p>
           <a href="#" onclick="logout()" style="font-size: 0.7rem; color: #ff4d4d; text-decoration: none; cursor: pointer; font-weight: 800;" data-i18n="nav_logout">[ Chiqish ]</a>
        </div>
-       <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 800; color: #000;">AD</div>
+       <div id="navUserAvatar" style="width: 40px; height: 40px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 800; color: #000;">AD</div>
     </div>
   </nav>
 
   <section class="glass-section">
-    <div style="background: rgba(255, 193, 7, 0.1); padding: 1rem; border-radius: 10px; border: 1px solid #ffc107; margin-bottom: 2rem; color: #ffc107; text-align: center; font-weight: 700;">
+    <div style="background: rgba(255, 193, 7, 0.1); padding: 1rem; border-radius: 10px; border: 1px solid #ffc107; margin-bottom: 2rem; color: #ffc107; text-align: center; font-weight: 700;" data-i18n="ad_view_banner">
        ⚠️ ADMIN REJIMI: Siz hozirda talaba (Sardor Karimov) profilini ko'rmoqdasiz.
     </div>
     
@@ -60,18 +66,18 @@
       <!-- Main Content -->
       <div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-           <h2>Kunlik Baholar & Davomat</h2>
-           <span style="color: var(--text-muted); font-size: 0.9rem;">Bugun: 27-Mart, 2026</span>
+           <h2 data-i18n="sd_grades_title">Kunlik Baholar & Davomat</h2>
+           <span style="color: var(--text-muted); font-size: 0.9rem;" data-i18n="sd_today">Bugun: 27-Mart, 2026</span>
         </div>
 
         <div class="glass-card" style="margin-bottom: 2rem; padding: 0;">
            <table style="width: 100%; border-collapse: collapse; text-align: left;">
               <thead>
                  <tr style="border-bottom: 1px solid var(--glass-border); background: rgba(255,255,255,0.02);">
-                    <th style="padding: 1.5rem;">Fan nomi</th>
-                    <th style="padding: 1.5rem;">Mavzu</th>
-                    <th style="padding: 1.5rem;">Baho</th>
-                    <th style="padding: 1.5rem;">Status</th>
+                    <th style="padding: 1.5rem;" data-i18n="sd_th_subject">Fan nomi</th>
+                    <th style="padding: 1.5rem;" data-i18n="sd_th_topic">Mavzu</th>
+                    <th style="padding: 1.5rem;" data-i18n="sd_th_grade">Baho</th>
+                    <th style="padding: 1.5rem;" data-i18n="sd_th_status">Status</th>
                  </tr>
               </thead>
               <tbody>
@@ -89,11 +95,11 @@
       <!-- Sidebar -->
       <div>
         <div class="glass-card" style="text-align: center; margin-bottom: 2rem; border-color: var(--primary);">
-           <h3 style="margin-bottom: 1rem;">Professional Indeks</h3>
+           <h3 style="margin-bottom: 1rem;" data-i18n="sd_index_title">Professional Indeks</h3>
            <div class="index-circle" style="width: 150px; height: 150px; margin: 0 auto;">
               <span class="index-value" style="font-size: 2.5rem;">912</span>
            </div>
-           <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;">O'rin bitirovgacha <b style="color: var(--success);">HIMOYA QILINGAN</b>.</p>
+           <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;" data-i18n="sd_index_desc">O'rin bitirovgacha <b style="color: var(--success);">HIMOYA QILINGAN</b>.</p>
         </div>
       </div>
     </div>
@@ -104,9 +110,9 @@
       <div class="footer-section">
         <h4 data-i18n="f_about_title">Tashkilot haqida</h4>
         <ul>
-          <li><a href="#" data-i18n="f_about_1">Biz haqimizda</a></li>
-          <li><a href="#" data-i18n="f_about_2">Yangiliklar</a></li>
-          <li><a href="#" data-i18n="f_about_3">Aloqa uchun ma'lumotlar</a></li>
+          <li><a href="about.html" data-i18n="f_about_1">Biz haqimizda</a></li>
+          <li><a href="about.html#news" data-i18n="f_about_2">Yangiliklar</a></li>
+          <li><a href="about.html#contact" data-i18n="f_about_3">Aloqa uchun ma'lumotlar</a></li>
         </ul>
       </div>
       

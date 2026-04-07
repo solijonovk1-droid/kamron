@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | EduGravity AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root { --primary:#6366f1; --bg:#0f172a; --card:rgba(30,41,59,0.7); --border:rgba(255,255,255,0.08); --text:#e2e8f0; --muted:#94a3b8; }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Outfit',sans-serif; }
+        body { background:var(--bg); color:var(--text); display:flex; min-height:100vh; }
+        .sidebar { width:260px; background:var(--card); border-right:1px solid var(--border); padding:40px 30px; display:flex; flex-direction:column; position:fixed; height:100vh; }
+        .logo { font-size:1.6rem; font-weight:800; color:var(--primary); margin-bottom:50px; }
+        .nav-item { padding:14px 20px; border-radius:12px; margin-bottom:8px; cursor:pointer; color:var(--muted); font-weight:500; transition:0.2s; }
+        .nav-item:hover,.nav-item.active { background:rgba(99,102,241,0.1); color:#fff; font-weight:700; }
+        .nav-item.logout { color:#ff6b6b; margin-top:auto; }
+        .content { margin-left:260px; padding:50px; flex:1; }
+        header { display:flex; justify-content:space-between; align-items:center; margin-bottom:50px; }
+        .user-chip { display:flex; align-items:center; gap:12px; background:var(--card); border:1px solid var(--border); padding:8px 20px; border-radius:20px; }
+        .avatar { width:36px; height:36px; border-radius:50%; border:2px solid var(--primary); }
+        .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-bottom:50px; }
+        .stat-card { background:var(--card); border:1px solid var(--border); border-radius:24px; padding:36px; }
+        .stat-label { font-size:0.75rem; text-transform:uppercase; letter-spacing:2px; color:var(--muted); margin-bottom:12px; }
+        .stat-value { font-size:2.4rem; font-weight:800; }
+        .grid2 { display:grid; grid-template-columns:1.2fr 0.8fr; gap:24px; }
+        .glass { background:var(--card); border:1px solid var(--border); border-radius:24px; padding:40px; }
+        .ai-output { margin-top:24px; padding:20px; background:rgba(0,0,0,0.2); border-radius:16px; border:1px dashed var(--border); min-height:100px; color:var(--muted); line-height:1.8; }
+        .btn { padding:16px 24px; background:var(--primary); border:none; border-radius:12px; color:#fff; font-weight:800; cursor:pointer; transition:0.3s; margin-top:20px; }
+        .btn:hover { transform:translateY(-2px); box-shadow:0 10px 25px rgba(99,102,241,0.4); }
+        table { width:100%; border-collapse:collapse; margin-top:24px; }
+        th,td { padding:14px 16px; text-align:left; }
+        th { color:var(--muted); border-bottom:1px solid var(--border); font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; }
+        td { border-bottom:1px solid rgba(255,255,255,0.03); }
+        .badge { padding:4px 10px; border-radius:8px; font-size:0.8rem; font-weight:800; }
+        .g { background:rgba(0,255,136,0.1); color:#00ff88; }
+        .b { background:rgba(99,102,241,0.1); color:#6366f1; }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+        .fade { animation: fadeUp 0.6s ease; }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo">EG AI</div>
+        <div class="nav-item active">🏠 Dashboard</div>
+        <div class="nav-item">📑 Baholar</div>
+        <div class="nav-item">🏆 Reyting</div>
+        <div class="nav-item logout" onclick="logout()">🚪 Chiqish</div>
+    </nav>
+
+    <main class="content">
+        <header>
+            <div>
+                <h2>Salom, <span id="userName">foydalanuvchi</span> 👋</h2>
+                <p style="color:var(--muted); margin-top:4px;">EduGravity AI Cloud Portal</p>
+            </div>
+            <div class="user-chip">
+                <img id="userAvatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=eg" class="avatar">
+                <span id="userEmail">user@edugravity.uz</span>
+            </div>
+        </header>
+
+        <div class="stats fade">
+            <div class="stat-card">
+                <div class="stat-label">GPA Score</div>
+                <div class="stat-value" style="color:var(--primary)">3.92 ★</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Fanlar</div>
+                <div class="stat-value">12</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Davomat</div>
+                <div class="stat-value">95.4%</div>
+            </div>
+        </div>
+
+        <div class="grid2 fade">
+            <div class="glass">
+                <h2>🧠 AI Academic Insights</h2>
+                <p style="color:var(--muted); margin-top:8px;">Natijalaringiz tahlili va kelajak tavsiyalar.</p>
+                <div class="ai-output" id="aiOut">AI tahlili uchun tugmani bosing...</div>
+                <button class="btn" onclick="getAIAdvice()">Get AI Advice</button>
+            </div>
+            <div class="glass">
+                <h2>Oxirgi Baholar</h2>
+                <table>
+                    <thead><tr><th>Fan</th><th>Baho</th></tr></thead>
+                    <tbody>
+                        <tr><td>Advanced AI</td><td><span class="badge g">5</span></td></tr>
+                        <tr><td>Data Tech</td><td><span class="badge b">4+</span></td></tr>
+                        <tr><td>Cloud Arch.</td><td><span class="badge g">5</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const SB_URL = "https://ushonvjezpovomkdivbw.supabase.co";
+        const SB_KEY = "sb_publishable_7crDnMqPVtKwIX3R2l4uxQ_1o5JEGkJ";
+        const _sb = supabase.createClient(SB_URL, SB_KEY);
+
+        // Guard: redirect if not logged in
+        (async () => {
+            const { data: { session } } = await _sb.auth.getSession();
+            if (!session) { window.location.href = 'index.html'; return; }
+            const u = session.user;
+            const name = u.user_metadata?.full_name || u.email.split('@')[0];
+            document.getElementById('userName').innerText = name;
+            document.getElementById('userEmail').innerText = u.email;
+            document.getElementById('userAvatar').src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`;
+        })();
+
+        function getAIAdvice() {
+            const out = document.getElementById('aiOut');
+            out.style.opacity = 0.4;
+            out.innerText = '🧠 Tahlil qilinmoqda...';
+            setTimeout(() => {
+                out.innerHTML = "<b>Natijangiz:</b> GPA 3.92 — A'lo Daraja ✅<br><br><b>AI Tavsiya:</b> Cloud Architecture kursini qo'shish sizning reytingingizni 4.1 ga ko'taradi. <b>Amity University</b> grant taklifi yuborildi!";
+                out.style.opacity = 1;
+            }, 1500);
+        }
+
+        async function logout() {
+            await _sb.auth.signOut();
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
