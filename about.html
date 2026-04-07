@@ -1,383 +1,119 @@
 <!DOCTYPE html>
 <html lang="uz">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Biz Haqimizda | EduGravity</title>
-    <meta name="description"
-        content="EduGravity - Uzbekistondagi yetakchi AI-driven ta'lim platformasi haqida ma'lumot. Missiya, jamoa va aloqa." />
-    <link rel="stylesheet" href="style.css">
+    <title>Biz Haqimizda | EduGravity AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
     <style>
-        .team-card {
-            background: var(--card-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            transition: var(--transition);
-        }
+        :root { --primary:#6366f1; --secondary:#9333ea; --bg:#020617; --card:rgba(15,23,42,0.8); --border:rgba(255,255,255,0.05); --text:#e2e8f0; --muted:#94a3b8; --success:#10b981; }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Outfit',sans-serif; }
+        body { background:var(--bg); color:var(--text); overflow-x: hidden; }
+        
+        .bg-glow { position: fixed; width: 600px; height: 600px; border-radius: 50%; filter: blur(120px); z-index: -1; opacity: 0.1; pointer-events: none; }
+        .glow-1 { top: -200px; left: -200px; background: var(--primary); }
+        .glow-2 { bottom: -200px; right: -200px; background: var(--secondary); }
 
-        .team-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--primary);
-        }
+        nav { display:flex; justify-content:space-between; align-items:center; padding:30px 60px; position:fixed; width:100%; top:0; z-index:1000; background: rgba(2,6,23,0.8); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+        .logo { font-size:1.6rem; font-weight:800; color:#fff; display: flex; align-items: center; gap: 12px; }
+        .logo span { width: 32px; height: 32px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+        
+        .nav-links { display: flex; gap: 40px; list-style: none; }
+        .nav-links a { color: var(--muted); text-decoration: none; font-weight: 500; transition: 0.3s; font-size: 0.9rem; }
+        .nav-links a:hover, .nav-links a.active { color: #fff; }
 
-        .team-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            margin: 0 auto 1rem;
-        }
+        .btn-premium { background: linear-gradient(90deg, var(--primary), var(--secondary)); border: none; padding: 12px 30px; border-radius: 12px; color: #fff; font-weight: 800; cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-block; }
+        .btn-premium:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(99,102,241,0.3); }
 
-        .mission-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
+        .container { max-width: 1000px; margin: 150px auto 100px; padding: 0 20px; }
+        .section-tag { background: rgba(99,102,241,0.1); border: 1px solid var(--primary); padding: 5px 15px; border-radius: 30px; display: inline-block; font-size: 0.7rem; font-weight: 800; letter-spacing: 2px; color: var(--primary); margin-bottom: 20px; text-transform: uppercase; }
 
-        .contact-form input,
-        .contact-form textarea,
-        .contact-form select {
-            width: 100%;
-            padding: 12px 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            color: #fff;
-            outline: none;
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-            transition: border-color 0.3s;
-        }
+        .glass-card { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 40px; margin-bottom: 30px; backdrop-filter: blur(10px); }
+        
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 40px; }
+        .team-card { background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 30px; text-align: center; transition: 0.3s; }
+        .team-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .avatar { width: 80px; height: 80px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #fff; }
 
-        .contact-form input:focus,
-        .contact-form textarea:focus {
-            border-color: var(--primary);
-        }
+        .contact-form input, .contact-form textarea, .contact-form select { width: 100%; padding: 15px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; color: #fff; margin-bottom: 20px; outline: none; transition: 0.3s; }
+        .contact-form input:focus { border-color: var(--primary); background: rgba(255,255,255,0.05); }
 
-        .contact-form textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
+        footer { border-top: 1px solid var(--border); padding: 60px; text-align: center; color: var(--muted); font-size: 0.9rem; }
     </style>
 </head>
-
 <body>
     <div class="bg-glow glow-1"></div>
     <div class="bg-glow glow-2"></div>
 
-    <!-- Nav -->
     <nav>
-        <div class="logo">
-            <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="20" cy="20" r="18" stroke="url(#logoGrad)" stroke-width="3" />
-                <path d="M20 10L10 25H30L20 10Z" fill="white" />
-                <defs>
-                    <linearGradient id="logoGrad" x1="0" y2="40">
-                        <stop stop-color="#00d2ff" />
-                        <stop offset="1" stop-color="#9000ff" />
-                    </linearGradient>
-                </defs>
-            </svg>
-            EduGravity
-        </div>
+        <div class="logo"><span>EG</span> EduGravity</div>
         <ul class="nav-links">
-            <li><a href="index.html" data-i18n="nav_home">Asosiy</a></li>
-            <li><a href="jobs.html" data-i18n="nav_jobs">Ish Kafolati</a></li>
+            <li><a href="index.html">Asosiy</a></li>
+            <li><a href="jobs.html">Ish Kafolati</a></li>
             <li><a href="about.html" class="active">Biz Haqimizda</a></li>
         </ul>
         <div class="nav-actions">
-            <div class="theme-toggle" onclick="toggleTheme()">🌙</div>
-            <div class="lang-switcher">
-                <span>UZ</span>
-                <div class="lang-dropdown">
-                    <div class="lang-opt" onclick="setLanguage('uz')">O'zbekcha</div>
-                    <div class="lang-opt" onclick="setLanguage('ru')">Русский</div>
-                    <div class="lang-opt" onclick="setLanguage('en')">English</div>
-                </div>
-            </div>
-            <button class="btn-premium" onclick="window.location.href='login.html'">Kirish</button>
+            <a href="login.html" class="btn-premium">Kirish</a>
         </div>
     </nav>
 
-    <!-- Hero -->
-    <section style="text-align: center; padding-top: 5rem; padding-bottom: 2rem;">
-        <div class="reveal">
-            <div class="section-tag">🚀 Bizning Missiya</div>
-            <h1
-                style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; margin: 1rem 0; background: linear-gradient(135deg, #fff 30%, #a0a0a0 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
-                Ta'limni Kelajak Uchun Qurmoqdamiz
-            </h1>
-            <p
-                style="color: var(--text-muted); font-size: 1.1rem; max-width: 700px; margin: 0 auto 3rem; line-height: 1.8;">
-                EduGravity — Uzbekiston va Markaziy Osiyodagi ta'lim sifatini oshirish, talabalarni ish bilan ta'minlash
-                va o'qituvchilarning mehnatini to'g'ri baholash maqsadida yaratilgan AI-driven platforma.
-            </p>
+    <main class="container">
+        <div style="text-align: center; margin-bottom: 80px;">
+            <div class="section-tag">Bizning Missiya</div>
+            <h1 style="font-size: 3.5rem; margin-bottom: 20px;">Ta'limni Kelajak Uchun Qurmoqdamiz</h1>
+            <p style="color: var(--muted); font-size: 1.1rem; line-height: 1.8;">EduGravity — O'zbekistondagi ta'lim sifatini oshirish, talabalarni ish bilan ta'minlash va o'qituvchilarning mehnatini to'g'ri baholash maqsadida yaratilgan AI ekotizimi.</p>
         </div>
-    </section>
 
-    <!-- Mission Cards -->
-    <section style="padding-top: 0;">
-        <div class="feature-grid reveal" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
-            <div class="glass-card" style="text-align: center; border-color: rgba(0,210,255,0.3);">
-                <div class="mission-icon">🎯</div>
-                <h3 style="margin-bottom: 1rem; color: var(--primary);">Maqsadimiz</h3>
-                <p style="color: var(--text-muted); line-height: 1.7;">Har bir talabaning qobiliyatini to'g'ri baholab,
-                    ularga bitirgunicha ish kafolatini ta'minlash.</p>
-            </div>
-            <div class="glass-card" style="text-align: center; border-color: rgba(144,0,255,0.3);">
-                <div class="mission-icon">🤖</div>
-                <h3 style="margin-bottom: 1rem; color: var(--secondary);">Texnologiyamiz</h3>
-                <p style="color: var(--text-muted); line-height: 1.7;">Sun'iy intellekt, Blockchain va HEMIS
-                    integratsiyasi orqali shaffof va adolatli ta'lim muhiti.</p>
-            </div>
-            <div class="glass-card" style="text-align: center; border-color: rgba(0,255,136,0.3);">
-                <div class="mission-icon">🌍</div>
-                <h3 style="margin-bottom: 1rem; color: var(--success);">Kelajak Rejamiz</h3>
-                <p style="color: var(--text-muted); line-height: 1.7;">2030 yilga qadar 1 million talabani global ish
-                    bozori bilan bog'lash va 120+ OTM bilan hamkorlik.</p>
-            </div>
+        <div class="glass-card">
+            <h2 style="margin-bottom: 25px;">Kompaniya Haqida</h2>
+            <p style="line-height: 1.8; color: var(--muted);">2024-yilda asos solingan EduGravity, bugungi kunda 120 dan ortiq OTMlar bilan hamkorlik qiladi. Bizning asosiy maqsadimiz — har bir talabaning qobiliyatini Blockchain texnologiyasi orqali tasdiqlash va ular uchun 100% ish kafolatini yaratishdir.</p>
         </div>
-    </section>
 
-    <!-- Stats -->
-    <section class="reveal"
-        style="text-align: center; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); padding: 4rem 5%;">
-        <div style="display: flex; justify-content: center; gap: 60px; flex-wrap: wrap;">
-            <div class="stat-block">
-                <h4 style="color: var(--primary);">2024</h4>
-                <p>Asos Solingan</p>
+        <div style="margin-top: 80px;">
+            <div style="text-align: center;">
+                <div class="section-tag">Jamoa</div>
+                <h2>Bizning Ekspertlar</h2>
             </div>
-            <div class="stat-block">
-                <h4>120+</h4>
-                <p>Hamkor OTMlar</p>
-            </div>
-            <div class="stat-block">
-                <h4 style="color: var(--success);">95%</h4>
-                <p>Ish Topish Darajasi</p>
-            </div>
-            <div class="stat-block">
-                <h4>50K+</h4>
-                <p>Faol Talabalar</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Team -->
-    <section class="reveal">
-        <div style="text-align: center; margin-bottom: 3rem;">
-            <div class="section-tag">👥 Jamoa</div>
-            <h2>Bizning Jamoamiz</h2>
-        </div>
-        <div class="feature-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
-            <div class="team-card reveal">
-                <div class="team-avatar">👨‍💼</div>
-                <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Solijonov Komiljon</h3>
-                <p style="color: var(--text-muted); font-size: 0.85rem;">CEO & Founder</p>
-                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.5rem; line-height: 1.5;">Ta'lim
-                    texnologiyalari sohasidagi 8 yillik tajriba.</p>
-            </div>
-            <div class="team-card reveal">
-                <div class="team-avatar">👩‍💻</div>
-                <h3 style="color: var(--secondary); margin-bottom: 0.5rem;">Malikova Dilnoza</h3>
-                <p style="color: var(--text-muted); font-size: 0.85rem;">CTO & Lead Developer</p>
-                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.5rem; line-height: 1.5;">AI va
-                    Blockchain ixtisoslashuvi.</p>
-            </div>
-            <div class="team-card reveal">
-                <div class="team-avatar">👨‍🏫</div>
-                <h3 style="color: var(--success); margin-bottom: 0.5rem;">Karimov Sardor</h3>
-                <p style="color: var(--text-muted); font-size: 0.85rem;">Head of Education</p>
-                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.5rem; line-height: 1.5;">Oldingi
-                    professor, 15 yillik ta'lim tajribasi.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- News -->
-    <section id="news" class="reveal">
-        <div style="text-align: center; margin-bottom: 3rem;">
-            <div class="section-tag">📰 Yangiliklar</div>
-            <h2>So'nggi Yangiliklar</h2>
-        </div>
-        <div class="feature-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
-            <div class="glass-card reveal">
-                <div
-                    style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.8rem;">
-                    Yanvar 2026</div>
-                <h3 style="margin-bottom: 0.8rem;">EduGravity 50,000 talabaga yetdi</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">Platformamiz birinchi yil
-                    ichida 50,000 dan ortiq faol foydalanuvchiga ega bo'ldi.</p>
-            </div>
-            <div class="glass-card reveal">
-                <div
-                    style="font-size: 0.75rem; color: var(--secondary); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.8rem;">
-                    Fevral 2026</div>
-                <h3 style="margin-bottom: 0.8rem;">HEMIS bilan rasmiy integratsiya</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">Davlat ta'lim tizimi HEMIS
-                    bilan rasmiy integratsiya amalga oshirildi.</p>
-            </div>
-            <div class="glass-card reveal">
-                <div
-                    style="font-size: 0.75rem; color: var(--success); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.8rem;">
-                    Mart 2026</div>
-                <h3 style="margin-bottom: 0.8rem;">Google va Amazon hamkorligi</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">Top xalqaro kompaniyalar bilan
-                    ish kafolati shartnomasi imzolandi.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" class="reveal">
-        <div style="text-align: center; margin-bottom: 3rem;">
-            <div class="section-tag">📨 Aloqa</div>
-            <h2>Biz Bilan Bog'laning</h2>
-        </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 900px; margin: 0 auto;">
-            <div class="glass-card">
-                <h3 style="margin-bottom: 1.5rem; color: var(--primary);">Aloqa Ma'lumotlari</h3>
-                <div style="display: flex; flex-direction: column; gap: 1.2rem;">
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div
-                            style="width: 40px; height: 40px; background: rgba(0,210,255,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">
-                            📧</div>
-                        <div>
-                            <p style="font-size: 0.8rem; color: var(--text-muted);">Email</p>
-                            <p style="font-weight: 600;">info@edugravity.uz</p>
-                        </div>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div
-                            style="width: 40px; height: 40px; background: rgba(144,0,255,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">
-                            📱</div>
-                        <div>
-                            <p style="font-size: 0.8rem; color: var(--text-muted);">Telefon</p>
-                            <p style="font-weight: 600;">+998 71 123 45 67</p>
-                        </div>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div
-                            style="width: 40px; height: 40px; background: rgba(0,255,136,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">
-                            📍</div>
-                        <div>
-                            <p style="font-size: 0.8rem; color: var(--text-muted);">Manzil</p>
-                            <p style="font-weight: 600;">Toshkent, Mirzo Ulug'bek tumani, Universitet ko'chasi 4</p>
-                        </div>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div
-                            style="width: 40px; height: 40px; background: rgba(0,210,255,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">
-                            💬</div>
-                        <div>
-                            <p style="font-size: 0.8rem; color: var(--text-muted);">Telegram</p>
-                            <p style="font-weight: 600;">@EduGravityUz</p>
-                        </div>
-                    </div>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="avatar">👨‍💼</div>
+                    <h3>Solijonov Komiljon</h3>
+                    <p style="color: var(--primary); font-weight: 800; font-size: 0.8rem; margin: 10px 0;">Founder & CEO</p>
+                    <p style="color: var(--muted); font-size: 0.85rem;">Ta'lim texnologiyalari sohasidagi 8 yillik tajribaga ega strateg.</p>
+                </div>
+                <div class="team-card">
+                    <div class="avatar">👩‍💻</div>
+                    <h3>Malikova Dilnoza</h3>
+                    <p style="color: var(--primary); font-weight: 800; font-size: 0.8rem; margin: 10px 0;">CTO</p>
+                    <p style="color: var(--muted); font-size: 0.85rem;">AI va Blockchain tizimlari bo'yicha yetakchi dasturchi.</p>
+                </div>
+                <div class="team-card">
+                    <div class="avatar">👨‍🏫</div>
+                    <h3>Karimov Sardor</h3>
+                    <p style="color: var(--primary); font-weight: 800; font-size: 0.8rem; margin: 10px 0;">Head of Education</p>
+                    <p style="color: var(--muted); font-size: 0.85rem;">15 yillik akademik tajribaga ega professor, metodist.</p>
                 </div>
             </div>
+        </div>
 
-            <div class="glass-card">
-                <h3 style="margin-bottom: 1.5rem; color: var(--secondary);">Xabar Yuborish</h3>
-                <form class="contact-form" id="contactForm">
-                    <input type="text" placeholder="Ismingiz" required id="contactName">
-                    <input type="email" placeholder="Email manzilingiz" required id="contactEmail">
-                    <select id="contactSubject">
-                        <option value="">Mavzuni tanlang</option>
-                        <option value="partner">Hamkorlik</option>
-                        <option value="support">Yordam</option>
-                        <option value="feedback">Taklif / Mulohaza</option>
-                        <option value="other">Boshqa</option>
-                    </select>
-                    <textarea placeholder="Xabaringizni yozing..." required id="contactMessage"></textarea>
-                    <button type="submit" class="btn-premium" style="width: 100%; padding: 14px;">Yuborish →</button>
+        <div style="margin-top: 100px;" id="contact">
+            <div style="text-align: center;">
+                <div class="section-tag">Aloqa</div>
+                <h2>Biz bilan bog'laning</h2>
+            </div>
+            <div class="glass-card" style="max-width: 600px; margin: 40px auto 0;">
+                <form class="contact-form">
+                    <input type="text" placeholder="Ismingiz" required>
+                    <input type="email" placeholder="Email manzilingiz" required>
+                    <textarea placeholder="Xabaringizni yozing..." rows="5" required></textarea>
+                    <button type="submit" class="btn-premium" style="width: 100%;" onclick="event.preventDefault(); alert('Xabaringiz yuborildi!')">Yuborish</button>
                 </form>
-                <div id="contactSuccess"
-                    style="display:none; margin-top: 1rem; padding: 12px; background: rgba(0,255,136,0.1); border-radius: 10px; color: var(--success); text-align: center; font-size: 0.9rem;">
-                    ✅ Xabaringiz muvaffaqiyatli yuborildi!
-                </div>
             </div>
         </div>
-    </section>
+    </main>
 
-    <!-- Footer -->
-    <footer class="main-footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Tashkilot haqida</h4>
-                <ul>
-                    <li><a href="about.html">Biz haqimizda</a></li>
-                    <li><a href="about.html#news">Yangiliklar</a></li>
-                    <li><a href="about.html#contact">Aloqa uchun ma'lumotlar</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Imkoniyatlar</h4>
-                <ul>
-                    <li><a href="teacher-dashboard.html">O'qituvchilarga</a></li>
-                    <li><a href="student-dashboard.html">O'quvchilarga</a></li>
-                    <li><a href="jobs.html">Ish Kafolati</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Qo'llab-quvvatlash</h4>
-                <ul>
-                    <li><a href="about.html#contact" style="color: #14b8a6;">Qo'llab-quvvatlash xizmati portal</a></li>
-                </ul>
-                <a href="about.html#contact" class="btn-connect">Tashkilotni ulash</a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            &copy; 2026 EduGravity. Barcha huquqlar himoyalangan.
-        </div>
+    <footer>
+        <p>&copy; 2026 EduGravity AI. Barcha huquqlar himoyalangan.</p>
     </footer>
-
-    <div class="chatbot-toggle">💬</div>
-    <div class="chatbot-container">
-        <div class="chat-header">
-            <span style="font-weight: 700;">EduGravity AI</span>
-            <button onclick="document.querySelector('.chatbot-container').classList.remove('show')"
-                style="background: none; border: none; color: #fff; cursor: pointer; font-size: 1.2rem;">&times;</button>
-        </div>
-        <div class="chat-body">
-            <div class="chat-msg bot">Xush kelibsiz! Men EduGravity aqlli yordamchisiman. Sizga qanday yordam bera
-                olaman?</div>
-        </div>
-        <div class="chat-footer">
-            <input type="text" placeholder="Xabar yozing...">
-            <button class="btn-premium" style="padding: 10px 15px; border-radius: 10px;">&rarr;</button>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-    <script>
-        document.getElementById('contactForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const btn = this.querySelector('button[type="submit"]');
-            btn.textContent = 'Yuborilmoqda...';
-            btn.disabled = true;
-            setTimeout(function () {
-                document.getElementById('contactSuccess').style.display = 'block';
-                document.getElementById('contactForm').reset();
-                btn.textContent = 'Yuborish →';
-                btn.disabled = false;
-                setTimeout(() => document.getElementById('contactSuccess').style.display = 'none', 4000);
-            }, 1000);
-        });
-    </script>
-    <style>
-        @media (max-width: 768px) {
-            #contact>div {
-                grid-template-columns: 1fr !important;
-            }
-        }
-    </style>
 </body>
-
 </html>

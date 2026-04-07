@@ -1,138 +1,213 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ro'yxatdan O'tish | EduGravity</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; background: #020617; min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow-x: hidden; padding: 20px; }
-    .auth-window { width: 100%; max-width: 1100px; height: 750px; background: #0b0c14; border-radius: 32px; border: 1px solid rgba(255, 255, 255, 0.05); display: flex; overflow: hidden; box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5); }
-    .visual-side { flex: 1.2; background: linear-gradient(135deg, #1e293b, #0f172a); position: relative; padding: 60px; display: flex; flex-direction: column; justify-content: flex-end; }
-    .visual-content { position: relative; z-index: 2; }
-    .visual-content h1 { font-size: 2.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 20px; color: #fff; }
-    .visual-content p { font-size: 1.1rem; opacity: 0.6; font-weight: 500; color: #fff; }
-    .form-side { flex: 1; padding: 40px 60px; display: flex; flex-direction: column; justify-content: center; background: #0b0c14; overflow-y: auto; }
-    .form-header h2 { font-size: 2.22rem; font-weight: 800; margin-bottom: 15px; color: #fff; }
-    .form-header p { color: #64748b; font-weight: 600; font-size: 1rem; margin-bottom: 30px; }
-    .form-header span { color: #3b82f6; cursor: pointer; text-decoration: underline; font-weight: 700; }
-    .form-group { margin-bottom: 20px; }
-    .form-label { display: block; font-size: 0.7rem; font-weight: 900; color: #475569; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
-    .input-field, select { width: 100%; padding: 15px 20px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 12px; color: #fff; font-size: 0.95rem; font-weight: 500; transition: 0.3s; color-scheme: dark; }
-    .input-field:focus, select:focus { border-color: #6366f1; background: rgba(99,102,241,0.03); outline: none; }
-    .submit-btn { width: 100%; padding: 18px; background: #6366f1; border: none; border-radius: 12px; color: #fff; font-size: 1rem; font-weight: 800; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-    .submit-btn:hover { background: #4f46e5; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3); }
-    #regError { display: none; color: #ff6b6b; margin-top: 15px; font-weight: 700; font-size: 0.8rem; text-align: center; }
-    
-    @media (max-width: 900px) {
-      .visual-side { display: none; }
-      .auth-window { max-width: 500px; height: auto; min-height: unset; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ro'yxatdan O'tish | EduGravity AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #6366f1; --bg: #0b0d17; --form-bg: #1a1c29; --input-bg: #2a2d3e; --text: #ffffff; --muted: #9499af; --border: rgba(255,255,255,0.1); }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Outfit',sans-serif; }
+        body { background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+
+        .auth-container { width: 95%; max-width: 1200px; height: 85vh; background: var(--form-bg); border-radius: 40px; display: flex; overflow: hidden; box-shadow: 0 50px 100px rgba(0,0,0,0.5); }
+
+        /* Left Side: Visual */
+        .auth-visual { flex: 1.1; position: relative; padding: 40px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
+        .auth-visual img.bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; border-radius: 30px; margin: 15px; width: calc(100% - 30px); height: calc(100% - 30px); }
+        .auth-visual .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(0deg, rgba(11, 13, 23, 0.6) 0%, rgba(11, 13, 23, 0) 100%); z-index: 1; border-radius: 30px; margin: 15px; width: calc(100% - 30px); height: calc(100% - 30px); }
+        
+        .visual-nav { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: 2px; }
+        .back-btn { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 8px 20px; border-radius: 30px; font-size: 0.8rem; text-decoration: none; color: #fff; transition: 0.3s; }
+        .back-btn:hover { background: rgba(255,255,255,0.2); }
+
+        .visual-text { position: relative; z-index: 2; text-align: center; margin-bottom: 40px; }
+        .visual-text h2 { font-size: 2.2rem; margin-bottom: 15px; line-height: 1.2; font-weight: 500; }
+        .slider-dots { display: flex; justify-content: center; gap: 8px; }
+        .dot { width: 24px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 10px; }
+        .dot.active { background: #fff; width: 40px; }
+
+        /* Right Side: Form */
+        .auth-content { flex: 1; padding: 60px; display: flex; flex-direction: column; justify-content: center; overflow-y: auto; }
+        .auth-content h1 { font-size: 2.5rem; margin-bottom: 10px; font-weight: 500; }
+        .auth-content p.link-p { color: var(--muted); margin-bottom: 40px; font-size: 0.95rem; }
+        .auth-content p.link-p span { color: var(--primary); cursor: pointer; text-decoration: none; font-weight: 500; margin-left: 5px; }
+
+        .form-row { display: flex; gap: 15px; margin-bottom: 20px; }
+        .input-group { margin-bottom: 20px; flex: 1; position: relative; }
+        input { width: 100%; padding: 16px 20px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 12px; color: #fff; font-size: 1rem; transition: 0.3s; }
+        input:focus { border-color: var(--primary); background: rgba(99,102,241,0.05); outline: none; }
+        
+        .pass-toggle { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--muted); cursor: pointer; }
+
+        .checkbox-group { display: flex; align-items: center; gap: 10px; margin-bottom: 30px; font-size: 0.85rem; color: var(--muted); }
+        .checkbox-group input { width: 20px; height: 20px; cursor: pointer; }
+        .checkbox-group span { color: #fff; border-bottom: 1px solid #fff; cursor: pointer; }
+
+        .btn-main { background: var(--primary); color: #fff; padding: 16px; border: none; border-radius: 12px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: 0.3s; margin-bottom: 30px; }
+        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(99,102,241,0.3); }
+
+        .separator { display: flex; align-items: center; color: var(--muted); font-size: 0.8rem; margin-bottom: 30px; }
+        .separator::before, .separator::after { content: ''; flex: 1; height: 1px; background: var(--border); margin: 0 15px; }
+
+        .social-btns { display: flex; gap: 15px; }
+        .social-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px; background: transparent; border: 1px solid var(--border); border-radius: 12px; color: #fff; font-size: 0.9rem; cursor: pointer; transition: 0.3s; }
+        .social-btn:hover { background: rgba(255,255,255,0.05); border-color: var(--muted); }
+        .social-btn img { width: 20px; }
+
+        .err { display: none; color: #ff6b6b; background: rgba(255,107,107,0.1); padding: 10px; border-radius: 8px; margin-bottom: 20px; font-size: 0.85rem; text-align: center; }
+
+        @media (max-width: 900px) {
+            .auth-visual { display: none; }
+            .auth-container { max-width: 500px; height: auto; padding-bottom: 40px; }
+            .auth-content { padding: 40px; }
+        }
+    </style>
 </head>
 <body>
-  <div class="auth-window">
-    <div class="visual-side">
-      <div style="position:absolute; top:40px; left:40px; font-weight:900; font-size:1.8rem; color:#6366f1;">EduGravity</div>
-      <div class="visual-content">
-        <h1>Cloud Identity <br> Enrollment</h1>
-        <p>Premium ta'lim ekotizimiga a'zo bo'ling.</p>
-      </div>
+    <div class="auth-container">
+        <!-- Visual Section -->
+        <div class="auth-visual">
+            <img class="bg" src="C:\Users\user\.gemini\antigravity\brain\cc10664b-07cc-406f-8ae5-7d61c6520c69\auth_bg_dunes_1775543086424.png" alt="Auth Background">
+            <div class="overlay"></div>
+            
+            <div class="visual-nav">
+                <div class="logo">AMU</div>
+                <a href="index.html" class="back-btn">Back to website &rarr;</a>
+            </div>
+
+            <div class="visual-text">
+                <h2>Capturing Moments,<br>Creating Memories</h2>
+                <div class="slider-dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot active"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Section -->
+        <div class="auth-content">
+            <div id="errBox" class="err">Login allaqachon band!</div>
+            <h1>Create an account</h1>
+            <p class="link-p">Already have an account? <span onclick="window.location.href='login.html'">Log in</span></p>
+
+            <form id="regForm">
+                <div class="form-row">
+                    <div class="input-group">
+                        <input type="text" id="firstname" placeholder="First name" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="lastname" placeholder="Last name" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <input type="email" id="email" placeholder="Email" required>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                    <span class="pass-toggle">👁️</span>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" required>
+                    I agree to the <span>Terms & Conditions</span>
+                </div>
+
+                <button type="submit" class="btn-main" id="regBtn">Create account</button>
+            </form>
+
+            <div class="separator">Or register with</div>
+
+            <div class="social-btns">
+                <button class="social-btn" onclick="showGeneralModal('Ma\'lumot', 'Tez orada!', '🚧')">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
+                    Google
+                </button>
+                <button class="social-btn" onclick="showGeneralModal('Ma\'lumot', 'Tez orada!', '🚧')">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" style="filter: invert(1);">
+                    Apple
+                </button>
+            </div>
+        </div>
     </div>
-    <div class="form-side">
-      <header class="form-header">
-        <h2>Ro'yxatdan O'tish</h2>
-        <p>Profilingiz bormi? <span onclick="window.location.href='login.html'">Kirish</span></p>
-      </header>
-      <form id="regForm">
-        <div class="form-group">
-          <label class="form-label">To'liq ism (F.I.SH)</label>
-          <input type="text" id="fullname" class="input-field" placeholder="Masalan: Sardor Karimov" required>
+
+    <!-- General Purpose Modal -->
+    <div id="generalModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); backdrop-filter:blur(10px); z-index:3000; align-items:center; justify-content:center; animation: fadeIn 0.3s ease;">
+        <div style="background:rgba(15,23,42,0.9); border:1px solid rgba(255,255,255,0.1); border-radius:30px; padding:40px; text-align:center; max-width:400px; width:90%;">
+            <div id="modalIcon" style="font-size:3rem; margin-bottom:20px;">🚀</div>
+            <h2 id="modalTitle" style="margin-bottom:10px;">Xabar</h2>
+            <p id="modalText" style="color:var(--muted); margin-bottom:30px;">Xabar matni bu yerda bo'ladi.</p>
+            <button onclick="closeGeneralModal()" class="btn-main" style="margin:0; width:100%;">Tushunarli</button>
         </div>
-        <div class="form-group">
-          <label class="form-label">Status (Rol)</label>
-          <select id="role">
-            <option value="student">Talaba</option>
-            <option value="teacher">Ustoz (Teacher)</option>
-            <option value="uni">Universitet (OTM)</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Email Manzili yoki Login</label>
-          <input type="text" id="email" class="input-field" placeholder="user@edugravity.uz" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Parol</label>
-          <input type="password" id="password" class="input-field" placeholder="••••••••" required>
-        </div>
-        <button type="submit" class="submit-btn" id="regBtn">Hisob yaratish</button>
-      </form>
-      <div id="regError">❌ Xatolik yuz berdi.</div>
     </div>
-  </div>
+    <style>
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+    </style>
 
-  <script>
-    // Redirect if already logged in
-    (function() {
-      const role = localStorage.getItem('userRole');
-      if (role) {
-        if (role === 'admin') window.location.replace('admin-dashboard.html');
-        else if (role === 'uni') window.location.replace('uni-dashboard.html');
-        else if (role === 'teacher') window.location.replace('teacher-dashboard.html');
-        else if (role === 'student') window.location.replace('student-dashboard.html');
-      }
-    })();
-
-    document.getElementById('regForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const btn = document.getElementById('regBtn');
-      const err = document.getElementById('regError');
-      const fullname = document.getElementById('fullname').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      const role = document.getElementById('role').value;
-
-      btn.innerText = 'Saqlanmoqda...';
-      btn.disabled = true;
-      err.style.display = 'none';
-
-      // Default users (forbidden to register with these logins)
-      const defaultUsers = ['admin', 'teacher', 'student', 'uni', 'madina', 'malikova'];
-
-      // Get registered users from localStorage
-      const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '{}');
-
-      setTimeout(function() {
-        if (defaultUsers.includes(email) || registeredUsers[email]) {
-          err.innerText = "❌ Bu login allaqachon band!";
-          err.style.display = 'block';
-          btn.innerText = 'Hisob yaratish';
-          btn.disabled = false;
-        } else {
-          // Save user
-          registeredUsers[email] = {
-            pass: password,
-            role: role,
-            name: fullname
-          };
-          localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
-
-          // Auto Login
-          localStorage.setItem('userRole', role);
-          localStorage.setItem('currentUser', email);
-          localStorage.setItem('userName', fullname);
-
-          alert("Muvaffaqiyatli ro'yxatdan o'tdingiz!");
-          
-          if (role === 'admin') window.location.href = 'admin-dashboard.html';
-          else if (role === 'uni') window.location.href = 'uni-dashboard.html';
-          else if (role === 'teacher') window.location.href = 'teacher-dashboard.html';
-          else if (role === 'student') window.location.href = 'student-dashboard.html';
+    <script>
+        // Modal Functions
+        function showGeneralModal(title, text, icon = '🚀') {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalText').innerText = text;
+            document.getElementById('modalIcon').innerText = icon;
+            document.getElementById('generalModal').style.display = 'flex';
         }
-      }, 1000);
-    });
-  </script>
+        function closeGeneralModal() {
+            document.getElementById('generalModal').style.display = 'none';
+        }
+
+        // Password Toggle
+        document.querySelector('.pass-toggle').addEventListener('click', function() {
+            const passInput = document.getElementById('password');
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                this.innerText = '👓';
+            } else {
+                passInput.type = 'password';
+                this.innerText = '👁️';
+            }
+        });
+
+        document.getElementById('regForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('regBtn');
+            const err = document.getElementById('errBox');
+            const firstname = document.getElementById('firstname').value.trim();
+            const lastname = document.getElementById('lastname').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            btn.innerText = 'Creating account...';
+            btn.disabled = true;
+            err.style.display = 'none';
+
+            const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '{}');
+            const demoUsers = ['admin', 'student', 'teacher', 'uni'];
+
+            setTimeout(() => {
+                if (registeredUsers[email] || demoUsers.includes(email)) {
+                    err.innerText = "❌ Bu email allaqachon band!";
+                    err.style.display = 'block';
+                    btn.innerText = 'Create account';
+                    btn.disabled = false;
+                } else {
+                    const fullname = firstname + ' ' + lastname;
+                    registeredUsers[email] = { pass: password, role: 'student', name: fullname };
+                    localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+
+                    localStorage.setItem('userRole', 'student');
+                    localStorage.setItem('currentUser', email);
+                    localStorage.setItem('userName', fullname);
+
+                    showGeneralModal('Muvaffaqiyat', 'Siz muvaffaqiyatli ro\'yxatdan o\'tdingiz!', '✅');
+                    setTimeout(() => { window.location.href = 'student-dashboard.html'; }, 1500);
+                }
+            }, 1200);
+        });
+    </script>
 </body>
 </html>
